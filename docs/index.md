@@ -20,6 +20,4 @@ features:
   - title: Command Line tool
     details: Work from the command line (great for CI)
     link: /commands/commands
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
