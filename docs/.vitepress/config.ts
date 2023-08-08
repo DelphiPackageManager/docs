@@ -4,6 +4,7 @@ import { defineConfig } from "vitepress";
 export default defineConfig({
   title: "DPM Documentation",
   description: "Documentation",
+  head: [["link", { rel: "icon", href: "/favicon.png" }]],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
