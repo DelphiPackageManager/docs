@@ -41,6 +41,7 @@ export default defineConfig({
           { text: "Package Versioning", link: "/concepts/package-versioning" },
           { text: "Package Dependencies", link: "/concepts/package-dependencies" },
           { text: "Version Range", link: "/concepts/version-range" },
+          { text: "How it works", link: "/concepts/how-it-works" },
         ],
       },
       {
