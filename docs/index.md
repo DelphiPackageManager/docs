@@ -5,6 +5,8 @@ layout: home
 hero:
   name: "DPM Documentation"
   tagline: The Delphi Package Manager
+  image:
+    src: /images/dpm-large.png
   actions:
     - theme: brand
       text: Introduction
@@ -17,7 +19,11 @@ features:
   - title: IDE Integration
     details: Comprehensive IDE integration
     link: /getting-started/ide-integration
+    icon:
+      src: /images/dpm_48.png
   - title: Command Line tool
     details: Work from the command line (great for CI)
     link: /commands/commands
+    icon:
+      src: /images/dpm_48.png
 ---
