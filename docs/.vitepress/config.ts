@@ -28,6 +28,7 @@ export default defineConfig({
           { text: "IDE Integration", link: "/getting-started/ide-integration" },
           { text: "Consuming Packages", link: "/getting-started/consuming-packages" },
           { text: "Creating Packages", link: "/getting-started/creating-packages" },
+          { text: "Known Issues", link: "/getting-started/known-issues" },
         ],
       },
       {
@@ -35,9 +36,11 @@ export default defineConfig({
         items: [
           { text: "Concepts", link: "/concepts/index" },
           { text: "Config Files", link: "/concepts/config-files" },
+          { text: "Package Sources", link: "/concepts/package-sources" },
           { text: "Package Cache", link: "/concepts/package-cache" },
           { text: "Package Versioning", link: "/concepts/package-versioning" },
           { text: "Package Dependencies", link: "/concepts/package-dependencies" },
+          { text: "Version Range", link: "/concepts/version-range" },
         ],
       },
       {
