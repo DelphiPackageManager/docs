@@ -17,6 +17,13 @@
   --vp-c-brand-dimm: rgba(100, 108, 255, 0.08);
 }
 
+.dark {
+  --vp-c-bg: rgb(17 24 39 / 1);
+  --vp-sidebar-bg-color: var(--vp-c-bg);
+  --vp-c-bg-soft: var(--vp-c-brand-dark);
+  --vp-c-bg-soft-up: var(--vp-c-brand-light);
+}
+
 /**
  * Component: Button
  * -------------------------------------------------------------------------- */

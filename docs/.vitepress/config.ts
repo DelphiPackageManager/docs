@@ -72,8 +72,8 @@ export default defineConfig({
 
     socialLinks: [{ icon: "github", link: "https://github.com/DelphiPackageManager/docs" }],
     footer: {
-      copyright: "Copyright © 2023-present Vincent Parrett & Contributors. All Rights Reserved.",
-      message: 'Sponsored by <a href="https://www.finalbuilder.com">VSoft Technologies Pty</a>',
+      copyright: 'Copyright © 2023 - present : <a href="https://github.com/DelphiPackageManager/DPM/people">DPM Dev team</a>. All Rights Reserved.',
+      message: 'Sponsored by <a href="https://www.finalbuilder.com">VSoft Technologies Pty Ltd.</a>',
     },
   },
 });
