@@ -23,14 +23,6 @@ The installer will detect which supported versions of the Rad Studio IDE you hav
 
 I recommended you leave the "add to path" option checked, it makes running the command line easier.
 
-Create a folder somewhere on your machine or a network share for the packages.
-
-Open a command prompt and run (assuming you left the add to path option checked in the installer).
-
-`dpm sources add -name=local -source=path to the folder you created`
-
-This will add a package source to your config. At this time only folders are supported, http sources will be added later.
-
 When you install packages, they will be downloaded from the package source to the package cache folder. By default the package cache folder will be in %APPDATA%\\.dpm\packages
 
 You can change that by editing %APPDATA%\\.dpm\dpm.config and changing the packageCacheLocation setting.
