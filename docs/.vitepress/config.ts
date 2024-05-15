@@ -26,8 +26,8 @@ export default defineConfig({
         text: "Getting Started",
         items: [
           { text: "Installing DPM", link: "/getting-started/installing" },
-          { text: "IDE Integration", link: "/getting-started/ide-integration" },
           { text: "Consuming Packages", link: "/getting-started/consuming-packages" },
+          { text: "IDE Integration", link: "/getting-started/ide-integration" },
           { text: "Creating Packages", link: "/getting-started/creating-packages" },
           { text: "Known Issues", link: "/getting-started/known-issues" },
         ],

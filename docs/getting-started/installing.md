@@ -27,35 +27,10 @@ When you install packages, they will be downloaded from the package source to th
 
 You can change that by editing %APPDATA%\\.dpm\dpm.config and changing the packageCacheLocation setting.
 
-To use DPM, you need some packages. I have published packages for all of my open source delphi projects, you will find the dpkg files under releases for each project. Packages files are named in a particular manner (eg : VSoft.CommandLine-XE2-Win64-0.0.2.dpkg) , do not rename them. Download the files to the folder you created earlier.
+To use DPM, you need some packages. The default package source is https://delphi.dev/api/v1/index.json - newer builds of dpm will add that by default.
 
-https://github.com/VSoftTechnologies/DUnitX/releases
 
-https://github.com/VSoftTechnologies/VSoft.SemanticVersion/releases
-
-https://github.com/VSoftTechnologies/VSoft.Awaitable/releases - note that for this one you will need to create a package for omnithreadlibrary - see the ThirdParty folder for a dspec file
-
-https://github.com/VSoftTechnologies/VSoft.VirtualListView/releases
-
-https://github.com/VSoftTechnologies/VSoft.AntPatterns/releases
-
-https://github.com/VSoftTechnologies/Delphi-Mocks/releases
-
-https://github.com/VSoftTechnologies/VSoft.Messaging/releases
-
-https://github.com/VSoftTechnologies/VSoft.CommandLineParser/releases
-
-https://github.com/VSoftTechnologies/VSoft.HttpClient/releases
-
-https://github.com/VSoftTechnologies/VSoft.Uri/releases
-
-https://github.com/VSoftTechnologies/VSoft.CancellationToken/releases
-
-https://github.com/VSoftTechnologies/VSoft.WeakReferences/releases
-
-https://github.com/VSoftTechnologies/Spring4DMirror
-
-Once you have some packages, you can either install packages from the command line, or using the IDE plugin. The IDE plugin adds a DPM node to each project in the project tree,
+You can either install packages from the command line, or using the IDE plugin. The IDE plugin adds a DPM node to each project in the project tree,
 and a right click menu to "Manage DPM Packages". The DPM package view will open docked in the IDE code window, and show the list of installed packages, plus the first 100 packages
 from the package sources. When you click on a package, the details on the right side of the view will show the package information and the projects which have the package installed.
 
@@ -73,6 +48,8 @@ The rest of this post is for people that want to compile or contribute or create
 ### Creating packages
 
 Create a dspec file - see the dspec files in the github projects linked above for examples. The docs are out a bit of date so use the source if you need a reference (Source\Core\Spec). If you get stuck just create a github issue.
+
+There is now also a DspecCreator.exe included with the install which helps with creating dspec files. 
 
 To generate the packages you need to run
 

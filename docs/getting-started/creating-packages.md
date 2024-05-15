@@ -71,28 +71,7 @@ An array of 1 or more objects, which specify the compiler/platform combinations 
 | --------- | ---------------------------------------------------------- |
 | compiler  | the [compiler version](../compiler-versions.md) (required) |
 | platforms | A comma-separated list of [platforms](../platforms.md)     |
-
-A targetPlatform object must also define either :
-
-**template** : The name of a template object in this dspec
-
-e.g
-
-```json
-{
-  "targetPlatforms": [
-    {
-      "compiler": "XE2",
-      "platforms": "Win32, Win64",
-      "template": "default"
-    }
-  ]
-}
-```
-
-or it must fully define the dependencies, source files etc. targetPlatforms and templates share the same properties (except for the name property on the template, and the template property on the targetPlatform).
-
-Where the package includes the same files for each targetPlatform, it is recommended to use a template.
+| template  | the name of a template (see below)                         |
 
 ## templates
 
