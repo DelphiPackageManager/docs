@@ -10,6 +10,6 @@
 
 [Package Dependencies](./package-dependencies)
 
-[How it works](./version-range.md)
+[Version Range](./version-range.md)
 
 [How it works](./how-it-works.md)
