@@ -47,7 +47,7 @@ DPM has the following dependencies
 
 [Gabr42.OmniThreadLibrary](https://github.com/VSoftTechnologies/OmniThreadLibrary/releases)
 
-Use the dpm release version to get your dev environment setup/
+Use the dpm release version to get your dev environment setup.
 
 You should now be able to load the dpm projects - there are IDE plugin projects for XE2-12.x, the unit tests and the command line are developed with 11.3.
 
