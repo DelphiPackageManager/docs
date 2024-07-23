@@ -156,27 +156,28 @@ runtime : [
 
 An array of 1 or more designPackage objects, which define which compiled design packages (.bpl) should be included in the package.
 
-| Property | Description                                                                                                      |
-| -------- | ---------------------------------------------------------------------------------------------------------------- |
-| src      | an Ant Pattern which describes which files to include                                                            |
-| dest     | the destination folder in the package file                                                                       |
+| Property | Description                                                                         |
+| -------- | ------------------------------------------------------------------------------------|
+| src      | an Ant Pattern which describes which files to include                               | 
+| dest     | the destination folder in the package file                                          |
 | install  | boolean (default false), determines whether the bpl should be installed in the IDE when the package is installed |
 
 ### Replacement Tokens
 
-When creating a package using the dpm pack command, \$ delimited tokens in the dspec file's `metadata` node will be replaced with values that come from either the project file, or the -properties argument of the pack command.
+When creating a package using the dpm pack command, `$` delimited tokens (e.g `$name$`) in the dspec file's `metadata` node will be replaced with values from the -properties argument of the pack command.
 
-To use the values from the project file, use the pack command with the dproj file rather than the dspec file. The dspec file and dproj file must live in the same folder, with the same name.
+In addition, there are built in tokens that are specific to TargetPlatforms
 
-Values provided on the command line will override any values taken from the dproj.
 
-TODO: Define actual tokens when implemented.
-
-| **Token**         | **Value source** | **Value**                          |
-| ----------------- | ---------------- | ---------------------------------- |
-| **$id$**          | Project file     | Name (title) from the project file |
-| **$version$**     | VersionInfo      | FileVersion                        |
-| **$author$**      | VersionInfo      | Company                            |
-| **$title$**       | VersionInfo      | Title                              |
-| **$description$** | VersionInfo      | Description                        |
-| **$copyright$**   | VersionInfo      | Copyright                          |
+| **Token**                    | **Value**           | **Example**                                |
+| ---------------------------- | ----------------------------------- | -------------------------- |
+| \$version\$                  | PackageVersion                      | `1.2.3`                    |
+| \$compiler\$                 | Well known Complier Version         | `10.4`                     |
+| \$compilerNoPoint\$          | Compiler version apart before point | `10`                       |
+| \$compilerCodeName\$         | Delphi Release Code Name            | `Sydney`                   |
+| \$compilerWithCodeName\$**   | Compiler Version + Code Name        | `10.4 Sydney`              |
+| \$platform\$                 | Platform Name                       | `Win32`                    |
+| \$compilerVersion\$          | Integer Compiler Version            | `34`                       |
+| \$libSuffix\$                | LibSuffix for compiler version      | `270`                      |
+| \$bdsVersion\$               | BDS Version                         | `21.0`                     |
+| \$bitness\$                  | Platform Bitness                    | `64`                       |
