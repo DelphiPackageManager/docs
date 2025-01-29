@@ -21,6 +21,10 @@ DPM is still in development, so not all functionality is ready yet. At this time
 - Restoring packages, including dependencies.
 - Pushing packages to a package source.
 
+### Can I use it with non DPM third party libraries?
+
+Yes! DPM will not interfere with other libraries that may be installed. The manner in which is adds packages to the search path will not change existing settings.
+
 ### How do I use it
 
 See the [getting started guide](./getting-started/installing.md).
