@@ -47,13 +47,11 @@ The rest of this post is for people that want to compile or contribute or create
 
 ### Creating packages
 
-Create a dspec file - see the dspec files in the github projects linked above for examples. The docs are out a bit of date so use the source if you need a reference (Source\Core\Spec). If you get stuck just create a github issue.
+Scaffold a starter `.dspec.yaml` with [`dpm spec`](../commands/spec-command.md) and edit it to suit your package. See [Creating Packages](./creating-packages.md) for the full spec reference.
 
-There is now also a DspecCreator.exe included with the install which helps with creating dspec files. 
+To build the package files, run:
 
-To generate the packages you need to run
-
-`dpm pack My.Package.dspec -o=c:\mypackagefolder`
+`dpm pack My.Package.dspec.yaml -o=c:\mypackagefolder`
 
 That will generate 1 file per compiler/platform combination.
 

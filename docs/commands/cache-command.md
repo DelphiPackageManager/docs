@@ -1,27 +1,27 @@
 # Cache command
 
-Downloads a package to the local package cache using the specified sources. If no sources are specified, those listed in the global configuration file, `%appdata%\.dpm\dpm.Config`
+Downloads a package into the local package cache, or - with the `verify` subcommand - re-hashes and re-verifies every package already in the cache. See [Package Cache](../concepts/package-cache.md) and [Package Signing](../concepts/package-signing.md).
+
+If no sources are specified, those listed in `%appdata%\.dpm\dpm.config` are used.
 
 ## Usage
 
 ```bat
-dpm cache <packageID> [options]
+dpm cache <packageId>|verify [options]
 ```
 
-where `<packageID>` names the package to download (using the latest version). You can indicate a specific version with the `-Version` option. Alternatively, uset the packageFile option to specify the package.
+The positional argument is either a package id to cache, or the literal `verify` which re-checks every package in the cache.
 
 ## Options
 
-| Option     | Description                                                                                                                           |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| compiler   | The delphi compiler version to target. Required. See [compiler-versions](../compiler-versions.md).                                    |
-| configFile | The dpm configuration file to apply. If not specified, `%AppData%\.dpm\dpm.Config` is used.                                           |
-| help       | Displays help information for the command.                                                                                            |
-| platforms  | The platforms to download (comma separated). Default is to download for all platforms available. See [platforms](../platforms.md).    |
-| preRelease | Allows prerelease packages to be downloaded.                                                                                          |
-| sources    | Specifies a comma-separated list of package sources to use. If omitted, the command uses the sources provided in configuration files. |
-| verbosity  | Specifies the amount of detail displayed in the output: _normal_, _quiet_, _detailed_.                                                |
-| version    | Specifies the version of the package to download.                                                                                     |
+| Option         | Description                                                                                                                           |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| version        | The version to cache. If omitted, the latest version is downloaded. (Download form only.)                                              |
+| compiler (-c)  | The Delphi compiler version of the package to cache. Required for the download form; ignored by `cache verify`. See [compiler-versions](../compiler-versions.md). |
+| sources (-s)   | Source(s) to fetch from. May be specified multiple times. If omitted, all configured sources are used.                                  |
+| configFile     | The DPM configuration file to apply. If not specified, `%AppData%\.dpm\dpm.config` is used.                                            |
+| verbosity (-v) | Output verbosity: _quiet_, _normal_, _detailed_.                                                                                       |
+| help (-h)      | Displays help information for the command.                                                                                             |
 
 ## Examples
 
@@ -30,7 +30,7 @@ dpm cache VSoft.CommandLine -compiler=10.3
 
 dpm cache VSoft.CommandLine -compiler=10.3 -version=1.0.1
 
-dpm cache Spring.Base -compiler=10.3
+dpm cache Spring.Base -compiler=10.3 -source=VSoftInternal
 
-dpm cache DUnitX.Framework -compiler=10.3 -platforms=Win32,Win64,OSX32
+dpm cache verify
 ```

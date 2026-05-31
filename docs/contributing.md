@@ -17,50 +17,20 @@ We make extensive use of Spring4D for Dependency Injection and collections. Make
 
 DPM is bootstrapped, so you need dpm to build it. Follow the [getting started guide](./getting-started/installing.md) first.
 
-DPM has the following dependencies
-
-[Spring4D.Base](https://github.com/VSoftTechnologies/Spring4DMirror/releases)
-
-[Spring4D.Core](https://github.com/VSoftTechnologies/Spring4DMirror/releases)
-
-[Spring4D.Extensions](https://github.com/VSoftTechnologies/Spring4DMirror/releases)
-
-[VSoft.AntPatterns](https://github.com/VSoftTechnologies/VSoft.AntPatterns/releases)
-
-[VSoft.Awaitable](https://github.com/VSoftTechnologies/VSoft.Awaitable/releases)
-
-[VSoft.CancellationToken](https://github.com/VSoftTechnologies/VSoft.CancellationToken/releases)
-
-[VSoft.CommandLineParser](https://github.com/VSoftTechnologies/VSoft.CommandLineParser/releases)
-
-[VSoft.DUnitX](https://github.com/VSoftTechnologies/DUnitX/releases)
-
-[VSoft.HttpClient](https://github.com/VSoftTechnologies/VSoft.HttpClient/releases)
-
-[VSoft.JsonDataObjects](https://github.com/ahausladen/JsonDataObjects/releases)
-
-[VSoft.SemanticVersion](https://github.com/VSoftTechnologies/VSoft.SemanticVersion/releases)
-
-[VSoft.VirtualListView](https://github.com/VSoftTechnologies/VSoft.VirtualListView/releases)
-
-[VSoft.Uri](https://github.com/VSoftTechnologies/VSoft.Uri/releases)
-
-[Gabr42.OmniThreadLibrary](https://github.com/VSoftTechnologies/OmniThreadLibrary/releases)
-
-Use the dpm release version to get your dev environment setup.
-
-You should now be able to load the dpm projects - there are IDE plugin projects for XE2-12.x, the unit tests and the command line are developed with 11.3.
+Use the dpm release version to get your dev environment setup. 
 
 The dpm IDE plugin will restore the packages automatically when you load the project and you should be able to build without issue.
 
-For debugging the IDE plugin dll, set the host application to the Delphi IDE version you are using (eg. E:\Emb\Studio\22.0\bin\bds.exe) and in the parameters to -rDPMTesting
+You should now be able to load the dpm projects - there are IDE plugin projects for XE2-13.x, the unit tests and the command line are developed with 13.1
+
+For debugging the IDE plugin dll, set the host application to the Delphi IDE version you are using (eg. E:\Emb\Studio\37.0\bin\bds.exe) and in the parameters to -rDPMTesting
 
 This will start an new IDE instance, with a clean registry. Do this once, then open regedit to
 
-`HKEY_CURRENT_USER\Software\Embarcadero\DPMTesting\22.0\Experts`
+`HKEY_CURRENT_USER\Software\Embarcadero\DPMTesting\37.0\Experts`
 
 and add a string value pointing to the dll you just build
 
-eg. `I:\Github\DelphiPackageManager\DPMMaster\Output\DPM.IDE.D110.dll`
+eg. `I:\Github\DelphiPackageManager\DPMMaster\Output\DPM.IDE.D130.dll`
 
 Then try debugging again - this time the new IDE instanced should load the plugin (you will see the logo on the splash screen).

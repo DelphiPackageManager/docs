@@ -1,6 +1,6 @@
 # List command
 
-Displays a list of packages from a given source. If no sources are specified, all sources defined in the global configuration file, `%AppData%\.dpm\dpm.config` are used. If `dpm.config` specifies no sources, then `list` uses the default feed (tbd).
+Displays a list of packages from one or more sources. If no sources are specified, all sources defined in `%AppData%\.dpm\dpm.config` are searched.
 
 ## Usage
 
@@ -8,30 +8,30 @@ Displays a list of packages from a given source. If no sources are specified, al
 dpm list [search terms] [options]
 ```
 
-where the optional search terms will filter the displayed list. Search terms are applied to the names of packages (folder), tags and package descriptions (HTTP feeds).
+The optional search terms filter the displayed list. They are applied to package ids (folder sources), and to package tags and descriptions (HTTP sources).
 
 ## Options
 
-| Option          | Description                                                                                                                                  |
-| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| allVersions     | List all versions of a package. By default, only the latest package version is displayed.                                                    |
-| configFile      | The dpm configuration file to apply. If not specified, `%AppData%\.dpm\dpm.Config` is used.                                                  |
-| compiler        | Compiler version. When not specified, all compiler versions found are listed.                                                                |
-| exact           | Search for an exact packageId match.                                                                                                         |
-| help            | Displays help information for the command.                                                                                                   |
-| includeDelisted | Display unlisted packages.                                                                                                                   |
-| preRelease      | Includes prerelease packages in the list.                                                                                                    |
-| source          | Specifies a sources to search, option may be specified multiple times to add extra sources, if ommitted all registered sources are searched. |
-| skip            | Skip over x results before listing.                                                                                                          |
-| take            | Take max x results.                                                                                                                          |
-| Verbosity       | Specifies the amount of detail displayed in the output: _normal_, _quiet_, _detailed_.                                                       |
+| Option            | Description                                                                                                  |
+| ----------------- | ------------------------------------------------------------------------------------------------------------ |
+| source (-s)       | Source to search. May be specified multiple times. If omitted, all registered sources are searched.            |
+| exact (-e)        | Search for an exact package id match.                                                                          |
+| prerelease (-pr)  | Include prerelease packages in the results.                                                                    |
+| includeDelisted (-d) | Include delisted packages in the results.                                                                   |
+| skip              | Skip the first _x_ results before listing.                                                                     |
+| take              | Return at most _x_ results.                                                                                    |
+| compiler (-c)     | Compiler version to filter by. When omitted, packages for every compiler version found are listed.             |
+| platforms (-p)    | Comma-separated platforms to filter by. When omitted, packages for every platform found are listed.            |
+| configFile        | The DPM configuration file to apply. If not specified, `%AppData%\.dpm\dpm.config` is used.                    |
+| verbosity (-v)    | Output verbosity: _quiet_, _normal_, _detailed_.                                                               |
+| help (-h)         | Displays help information for the command.                                                                     |
 
 ## Examples
 
 ```bat
-dpm list "commandline"
+dpm list commandline
 
-dpm list "semantic" -prerelease -skip=10 -take=10'
+dpm list semantic -prerelease -skip=10 -take=10
 
-dpm list "commandline" -compiler=10.2 -platforms=Win32,Win63,OSX32 -source=VSoftInternal -prerelease
+dpm list commandline -compiler=10.2 -platforms=Win32,Win64 -source=VSoftInternal -prerelease
 ```

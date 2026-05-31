@@ -16,17 +16,17 @@ Let's walk through the installation process, starting with the command line.
 
 `dpm install vsoft.commandline .\myproject.dproj`
 
-The first step is to determine the Delphi compiler version, which is done by reading the dproj file ([see known issues](../getting-started/known-issues)).
+The first step is to determine the Delphi compiler version, which is done by reading the dproj file ([see known issues](../getting-started/known-issues)). You can also specify the version on the command line (useful when upgrading compiler versions)
 
 The next step is find our package (VSoft.CommandLine). In the above example, we didn't specify a package version, so dpm searches the registered [sources](./package-sources) to determine the latest version (if any) available.
 
 DPM then checks it's [package cache](./package-cache) to see if it already has the package version downloaded.
 
-If the package is not already cached, dpm downloads it from the registered [source](./package-sources) and extracts the package file into the package cache. This provides us with access to the package manifest.
+If the package is not already cached, dpm downloads it from the registered [source](./package-sources) and extracts the package file into the package cache. This provides us with access to the package manifest. If the packaged was was signed then the signatures (repository, author or both) are checked against the package contents.
 
-Using the package manifest, we then start the package [dependency resolution](./package-dependencies) process, which walks the dependency tree to ensure that all dependencies can be resolved. The dependent packages are also downloaded to the package cache during this process (as we need the manifest).
+Using the package.dspec.yaml , we then start the package [dependency resolution](./package-dependencies) process, which walks the dependency tree to ensure that all dependencies can be resolved. The dependent packages are also downloaded to the package cache during this process.
 
-When all the dependencies are met, the dproj is updated with the package references (id and version) and the collected search paths are added to the base configuration for each platform. Note that the command line default is to attempt to install the package for all supported platforms that are enabled in the project. You can install different packages for different platforms by specifying the platform on the command line. In the IDE, you specify which platform you are working on from the UI.
+When all the dependencies are met, the dproj is updated with the package references (id and version) and the collected search paths are added to the base configuration for each platform. Note that the command line default is to attempt to install the package for all supported platforms that are enabled in the project.
 
 ### What changes does dpm make to my dproj?
 
@@ -42,4 +42,4 @@ Using the IDE integration, the package search view will show when newer versions
 
 Provided the referenced packages/versions are available for the new IDE, then loading the project into the new IDE should restore the packages for that IDE version and away you go. The likely scenario is that package authors will add the new compiler version support, and publish a new package version. First upgrade the package to that version in your old IDE, and then load the project in the new IDE.
 
-Our hope is that using DPM will make upgrading Delphi versions trivial compared to the current situation (as of 2023), where managing third party libraries is an impediment to upgrading.
+Our hope is that using DPM will make upgrading Delphi versions trivial compared to the current situation (as of 2026), where managing third party libraries is an impediment to upgrading.

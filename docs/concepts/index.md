@@ -13,3 +13,5 @@
 [Version Range](./version-range.md)
 
 [How it works](./how-it-works.md)
+
+[Package Signing](./package-signing.md)

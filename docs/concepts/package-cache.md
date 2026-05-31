@@ -4,9 +4,9 @@ The package cache is a folder where packages are downloaded and extracted to, so
 
 ## Where is it
 
-The default package cache location is `%APPDATA%\.dpm\packages` - it can be changed by modifying the **packageCacheLocation** setting in the `%APPDATA%\.dpm\dpm.config` file.
+The default package cache location is `%APPDATA%\.dpm\package_cache` - it can be changed by modifying the **packageCacheLocation** setting in the `%APPDATA%\.dpm\dpm.config.yaml` file.
 
-If a dpm.config file exists in the same folder as a project (dproj), then that config file will be used, and this file may have a different package cache location. Most commands also allow you to specify a configfile option.
+If a dpm.config.yaml file exists in the same folder as a project (dproj), then that config file will be used, and this file may have a different package cache location. Most commands also allow you to specify a configfile option.
 
 ## What's inside the cache
 
@@ -19,24 +19,24 @@ There will be a folder for each compiler version you have used with dpm
 e.g
 
 ```bat
-packages\XE7
+packages\delphi13.0
 ```
 
-and inside each compiler version folder, you will find platform folders
+and inside each compiler version folder, you will find packageId folders
 
 ```bat
-packages\XE7\Win32
-packages\XE7\Win64
+packages\delphi13.0\VSoft.DUnitX
+packages\delphi13.0\VSoft.CommandLine
 ```
 
-Inside each platform folder you will find package folders, with version subfolders under them
+Inside each packageId folder you will find version folders
 
 ```bat
-packages\XE7\Win32\VSoft.CommandLine\0.0.1
-packages\XE7\Win32\VSoft.CommandLine\0.0.2
+packages\delphi13.0\VSoft.CommandLine\0.0.1
+packages\delphi13.0\VSoft.CommandLine\0.0.2
 ```
 
-The structure inside the version folders will be dependent on the settings in the package dspec file used when the package was created. There will be a package.dspec file in the root of the version folder, this is the package manifest. You should not modifiy this file!
+The structure inside the version folders will be dependent on the settings in the package dspec file used when the package was created. There will be a package.dspec.yaml file in the root of the version folder. You should not modifiy this file!
 
 ## What if I delete the folder
 

@@ -12,18 +12,23 @@ DPM's initial developer is Vincent Parrett (DUnitX, FinalBuilder, Continua CI). 
 
 ### DPM Status
 
-DPM is still in development, so not all functionality is ready yet. At this time, it's at the stage where we are encouraging library authors to take a look and play with it and provide feedback (and perhaps get involved in the development). It's very much at a minimum viable product stage.
+DPM is in beta - we have put a lot of work in to getting it to a point where it should be usable for most Delphi developers. 
 
 #### What works
 
-- Creating packages
-- Installing packages, including dependencies
-- Restoring packages, including dependencies.
-- Pushing packages to a package source.
+- Creating packages (library authors)
+- Pushing packages to a package source (directory or server)
+- Installing and Restoring packages, including dependencies and design time components.
+- Multiple package sources
+- Package Signing - both Author (using a code signing certificate) and Repository signing (automatic).
+- Repository and Author Trust.
+- SBOM generation.
+- CLI and IDE plugin clients.
+
 
 ### Can I use it with non DPM third party libraries?
 
-Yes! DPM will not interfere with other libraries that may be installed. The manner in which is adds packages to the search path will not change existing settings.
+Yes! DPM will not interfere with other libraries that may be installed. The manner in which it adds packages to the search path will not change existing settings.
 
 ### How do I use it
 
@@ -37,13 +42,17 @@ Yes, IDE integration is provided in the installer for all supported IDE versions
 
 ### Is there a central package source
 
-It is currently being developed. The site is at [https://delphi.dev](https://delphi.dev) - but bear in mind we are still fleshing out the user and management ui's, so it's not yet ready for testing (feel free to have a browse). If it's down, that just means we're updating it or working on our infrastructure.
+Yes. The site is at [https://delphi.dev](https://delphi.dev) - it is relatively feature complete - **note** you do not need to register on this site to use packages from it - you only need to register if you want to publish packages.
 
-Package files will be stored and served by a [CDN](https://en.wikipedia.org/wiki/Content_delivery_network) - we are currently testing out options for this to find the best pricing
+Package files are stored on cloudflare R2 
+
+### Do I have to use the public package server?
+
+No - you can put package files in a directory and configure a dpm package source to point to that directory. Or if you are feeling adventurous you can run the package server project locally.  
 
 ### Is my old version of delphi supported
 
-Maybe, [see here](./compiler-versions.md) for supported compiler versions. All target [platforms](./platforms.md) for supported compiler versions are supported.
+[See here](./compiler-versions.md) for supported compiler versions. All target [platforms](./platforms.md) for supported compiler versions are supported.
 
 ### What about C++ Builder or FPC
 
@@ -51,7 +60,7 @@ Maybe, [see here](./compiler-versions.md) for supported compiler versions. All t
 
 ### Does it support design-time components
 
-Not yet, but is being worked on.
+YES, design time components are installed automatically when the package is installed or restored (during project load).
 
 ### How does it work
 

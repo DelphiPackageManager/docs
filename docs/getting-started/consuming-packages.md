@@ -2,11 +2,10 @@
 
 Before you can use DPM, you need a [Package Source](../concepts/package-sources.md) - you must add at least one package source.
 
-Since we don't yet have a globally accessible package source (ala nuget.org), you will need to download the package files from the where ever the package author publishes them. This will likely be attachments to a GitHub or BitBucket release, or on the author's website.
+By default, the public repository is added as a package source if missing.
 
-::: info NOTE
-When we have our package server implementation ready, this step will be optional.
-:::
+You can also use a directory (local or network) as a package source, usefull for private packages you do not want to share publicly.
+
 
 ### Installing a package
 

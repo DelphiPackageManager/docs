@@ -1,10 +1,28 @@
 # Help command
 
-The help command outputs the list of commands available.
+Prints help for DPM. With no arguments, lists every available command. With a command name, prints the usage, options, and examples for that command - exactly the information shown in the per-command pages in this section.
 
-When invoked with a command name parameter it will show the help for that command, eg.
+`?` is a short-form alias for `help`.
 
-`dpm help install`
+## Usage
+
+```bat
+dpm help [command]
+
+dpm ? [command]
+```
+
+## Examples
+
+```bat
+dpm help
+
+dpm help install
+
+dpm ? sign
+```
+
+Sample output for `dpm help install`:
 
 ```
 dpm help install
@@ -35,14 +53,4 @@ Options:
  -help|-h
  -nobanner|-nb
  -verbosity|-v=<verbosity>
-
-Examples :
-
-  dpm install VSoft.CommandLine
-
-  dpm install VSoft.CommandLine -version=1.0.1 c:\myprojects\project1.dproj
-
-  dpm install Spring.Base c:\myprojects -compiler=10.3
-
-  dpm install DUnitX.Framework c:\myproject\tests\mytest.dproj -compiler=10.3 -platforms=Win32,Win64,OSX32
 ```
