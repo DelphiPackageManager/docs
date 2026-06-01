@@ -1,6 +1,6 @@
 # Sources command
 
-Manages the list of package sources in `%appdata%\.dpm\dpm.config` (or the configuration file specified with `-configFile`).
+Manages the list of package sources in `%AppData%\.dpm\dpm.config.yaml` (or the configuration file specified with `-configFile`).
 
 ## Usage
 
@@ -20,7 +20,7 @@ dpm sources <operation> -name=<name> -source=<source> [-type=<type>] [options]
 | format (-f)    | Applies to the `List` action. `Detailed` (default) or `Short`.                                              |
 | userName (-u)  | User name for authenticating with the source.                                                               |
 | password (-p)  | Password for authenticating with the source. See note below.                                                |
-| configFile     | The DPM configuration file to apply. If not specified, `%AppData%\.dpm\dpm.config` is used.                 |
+| configFile     | The DPM configuration file to apply. If not specified, `%AppData%\.dpm\dpm.config.yaml` is used.                 |
 | verbosity (-v) | Output verbosity: _quiet_, _normal_, _detailed_.                                                            |
 | help (-h)      | Displays help information for the command.                                                                  |
 

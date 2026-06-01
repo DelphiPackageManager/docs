@@ -18,7 +18,7 @@ dpm pack <.dspec.yaml file> [options]
 | minclientversion (-mc)       | Set the `minClientVersion` attribute on the created package. Overrides any value in the `.dspec.yaml`.                                                                        |
 | variables (-p)               | Semicolon-delimited list of `name=value` variables to substitute into the spec during packing.                                                                                |
 | version                      | Override the version number from the `.dspec.yaml`.                                                                                                                            |
-| configFile                   | The DPM configuration file to apply. If not specified, `%AppData%\.dpm\dpm.config` is used.                                                                                   |
+| configFile                   | The DPM configuration file to apply. If not specified, `%AppData%\.dpm\dpm.config.yaml` is used.                                                                                   |
 | verbosity (-v)               | Output verbosity: _quiet_, _normal_, _detailed_.                                                                                                                              |
 | help (-h)                    | Displays help information for the command.                                                                                                                                    |
 

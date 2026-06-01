@@ -73,7 +73,7 @@ The `signing.validationMode` setting in [dpm.config](./config-files.md) controls
 
 DPM identifies signers by the **SPKI hash** of their certificate - a SHA-256 fingerprint of the certificate's public key. Pinning by SPKI rather than by certificate name or thumbprint means trust survives routine certificate renewals as long as the same key pair is reused, while still uniquely identifying the signer.
 
-Add a trusted publisher or repository to your `dpm.config`:
+Add a trusted publisher or repository to your `dpm.config.yaml`:
 
 ```yaml
 signing:

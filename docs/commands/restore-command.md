@@ -17,7 +17,7 @@ dpm restore <project | groupproj | folder> [options]
 | source (-s)    | Source(s) to fetch from. May be specified multiple times. If omitted, all configured sources are used.        |
 | compiler (-c)  | The Delphi compiler version to restore. If omitted, the version is detected from the `.dproj` file.            |
 | debugMode (-dm) | Restore the Debug configuration of the packages.                                                             |
-| configFile     | The DPM configuration file to apply. If not specified, `%AppData%\.dpm\dpm.config` is used.                   |
+| configFile     | The DPM configuration file to apply. If not specified, `%AppData%\.dpm\dpm.config.yaml` is used.                   |
 | verbosity (-v) | Output verbosity: _quiet_, _normal_, _detailed_.                                                              |
 | help (-h)      | Displays help information for the command.                                                                    |
 

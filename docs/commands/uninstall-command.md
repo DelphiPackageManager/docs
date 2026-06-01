@@ -16,7 +16,7 @@ dpm uninstall <packageId> [projectPath] [options]
 | -------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | compiler (-c)  | The Delphi compiler version to target. If omitted, the version is detected from the `.dproj` file.                          |
 | platforms (-p) | Comma-separated platforms to uninstall for. Default is all platforms the project targets. See [platforms](../platforms.md). |
-| configFile     | The DPM configuration file to apply. If not specified, `%AppData%\.dpm\dpm.config` is used.                                 |
+| configFile     | The DPM configuration file to apply. If not specified, `%AppData%\.dpm\dpm.config.yaml` is used.                                 |
 | verbosity (-v) | Output verbosity: _quiet_, _normal_, _detailed_.                                                                            |
 | help (-h)      | Displays help information for the command.                                                                                  |
 

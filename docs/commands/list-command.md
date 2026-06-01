@@ -1,6 +1,6 @@
 # List command
 
-Displays a list of packages from one or more sources. If no sources are specified, all sources defined in `%AppData%\.dpm\dpm.config` are searched.
+Displays a list of packages from one or more sources. If no sources are specified, all sources defined in `%AppData%\.dpm\dpm.config.yaml` are searched.
 
 ## Usage
 
@@ -22,7 +22,7 @@ The optional search terms filter the displayed list. They are applied to package
 | take              | Return at most _x_ results.                                                                                    |
 | compiler (-c)     | Compiler version to filter by. When omitted, packages for every compiler version found are listed.             |
 | platforms (-p)    | Comma-separated platforms to filter by. When omitted, packages for every platform found are listed.            |
-| configFile        | The DPM configuration file to apply. If not specified, `%AppData%\.dpm\dpm.config` is used.                    |
+| configFile        | The DPM configuration file to apply. If not specified, `%AppData%\.dpm\dpm.config.yaml` is used.                    |
 | verbosity (-v)    | Output verbosity: _quiet_, _normal_, _detailed_.                                                               |
 | help (-h)         | Displays help information for the command.                                                                     |
 

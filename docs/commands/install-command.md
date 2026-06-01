@@ -2,7 +2,7 @@
 
 Downloads and installs a package into a project. If no sources are specified, all sources defined in the DPM configuration file are used. If the configuration file specifies no sources, the default DPM feed is used.
 
-The configuration file in effect is `%appdata%\.dpm\dpm.config` unless overridden with `-configFile`.
+The configuration file in effect is `%AppData%\.dpm\dpm.config.yaml` unless overridden with `-configFile`.
 
 ## Usage
 
@@ -26,7 +26,7 @@ dpm install <packageId> [projectPath] [options]
 | upgrade        | Indicates the install is replacing an existing version of the package.                                                                                 |
 | useSource (-us) | Reference the package source rather than the compiled binaries.                                                                                       |
 | debugMode (-dm) | Install the Debug configuration of the package.                                                                                                       |
-| configFile     | The DPM configuration file to apply. If not specified, `%AppData%\.dpm\dpm.config` is used.                                                            |
+| configFile     | The DPM configuration file to apply. If not specified, `%AppData%\.dpm\dpm.config.yaml` is used.                                                            |
 | verbosity (-v) | Output verbosity: _quiet_, _normal_, _detailed_.                                                                                                      |
 | help (-h)      | Displays help information for the command.                                                                                                             |
 

@@ -1,6 +1,6 @@
 # Info command
 
-Prints information about the active DPM configuration. Currently this is just the path to the `dpm.config` file in effect for the current invocation (taking `-configFile` and the discovery rules into account).
+Prints information about the active DPM configuration. Currently this is just the path to the `dpm.config.yaml` file in effect for the current invocation (taking `-configFile` and the discovery rules into account).
 
 ## Usage
 
@@ -17,5 +17,5 @@ This command takes no command-specific options. Global flags (`-configFile`, `-v
 ```bat
 dpm info
 
-dpm info -configFile=.\dev.dpm.config
+dpm info -configFile=.\dev.dpm.config.yaml
 ```

@@ -15,7 +15,7 @@ where `<packagePath>` identifies the package to push to the server.
 | Option        | Description                                                                                                                                        |
 | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | apiKey        | The API key for the target repository. If not present, the one specified in the config file is used.                                               |
-| configFile    | The DPM configuration file to apply. If not specified, `%AppData%\.dpm\dpm.config` is used.                                                        |
+| configFile    | The DPM configuration file to apply. If not specified, `%AppData%\.dpm\dpm.config.yaml` is used.                                                        |
 | help          | Displays help information for the command.                                                                                                         |
 | source        | Specifies the server URL. DPM identifies a UNC or local folder source and simply copies the file there instead of pushing it using HTTP. Required. |
 | skipDuplicate | If a package and version already exist, skip it.                                                                                                   |
