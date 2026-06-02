@@ -29,6 +29,7 @@ export default defineConfig({
           { text: "Consuming Packages", link: "/getting-started/consuming-packages" },
           { text: "IDE Integration", link: "/getting-started/ide-integration" },
           { text: "Creating Packages", link: "/getting-started/creating-packages" },
+          { text: "Publishing Packages", link: "/getting-started/publishing-packages" },
           { text: "Known Issues", link: "/getting-started/known-issues" },
         ],
       },
