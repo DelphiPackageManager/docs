@@ -43,7 +43,7 @@ The `metadata` section identifies the package and provides descriptive informati
 
 | Field              | Required | Description                                                                                |
 | ------------------ | -------- | ------------------------------------------------------------------------------------------ |
-| `id`               | yes      | Package id, e.g. `VSoft.CommandLine`.                                                       |
+| `id`               | yes      | Package id, e.g. `VSoft.CommandLine`. Must follow the [package id rules](#package-id-rules). |
 | `version`          | yes      | Semantic version, e.g. `1.0.0`.                                                              |
 | `description`      | yes      | Short description of the package.                                                           |
 | `authors`          | yes      | Sequence of author names.                                                                   |
@@ -80,6 +80,27 @@ metadata:
   frameworks:
     - VCL
 ```
+
+### Package id rules
+
+The `id` is validated when the spec is loaded (during `dpm pack` and when a client reads the package). An invalid id causes the pack to fail. The rules are:
+
+- **Dotted segments** - the id is two or more segments separated by dots (`.`), conventionally `Organisation.PackageName` (e.g. `VSoft.CommandLine`). At least one dot is required.
+- **First segment** - must start with an ASCII letter and be at least **3 characters** long.
+- **Allowed characters** - ASCII letters (`A`-`Z`, `a`-`z`), digits (`0`-`9`) and underscore (`_`) within each segment, with `.` as the segment separator. Hyphens, spaces and other punctuation are not allowed.
+- **Subsequent segments** - each segment after a dot must be at least 1 character.
+- **Length** - 100 characters maximum.
+- Matching is case-insensitive, though ids are conventionally PascalCase.
+
+| Example                  | Valid | Reason                                          |
+| ------------------------ | ----- | ----------------------------------------------- |
+| `VSoft.CommandLine`      | yes   |                                                 |
+| `Spring4D.Core`          | yes   | digits are allowed within a segment             |
+| `MyCompany.Sub.Package`  | yes   | more than two segments are fine                 |
+| `Foo`                    | no    | no dot - needs at least two segments            |
+| `AB.Core`                | no    | first segment is shorter than 3 characters      |
+| `4Pack.Core`             | no    | must start with a letter                        |
+| `My-Company.Core`        | no    | hyphen is not allowed                           |
 
 ## targetPlatforms
 
