@@ -33,15 +33,10 @@ The key can be supplied in two ways:
 - Per command, with the `-apiKey` option.
 - Stored against the source in your [dpm.config](../concepts/config-files.md) file (the `apiKey` property of the package source).
 
-If `-apiKey` is not supplied, the key from the config file for that source is used.
-
-::: warning NOTE
-Passing the key on the command line leaks it into your shell history and process listings. For automated builds, prefer storing it in the config file, or inject it from a secret store in your CI pipeline.
-:::
 
 ## Pushing to a folder source
 
-For a folder or UNC source, the package file is copied into the source folder. No API key is needed.
+For a folder or UNC source, the package file is copied into the source folder. No API key is needed, however you do need write permissions to the folder.
 
 ```bat
 dpm push .\VSoft.CommandLine.1.0.1.dpkg -source=local
@@ -49,30 +44,25 @@ dpm push .\VSoft.CommandLine.1.0.1.dpkg -source=local
 
 ## Pushing to a server source
 
-For an HTTPS server source, the package is uploaded over HTTP. An API key is required.
+For an HTTPS server source, the package is uploaded over HTTPS. An API key is required.
 
 ```bat
-dpm push .\VSoft.CommandLine.1.0.1.dpkg -source=corporate -apiKey=abcdef
+dpm push .\VSoft.CommandLine.1.0.1.dpkg -source=dpm -apiKey=abcdef
 ```
 
-If the source already has an `apiKey` configured in your config file, you can omit `-apiKey`:
-
-```bat
-dpm push .\VSoft.CommandLine.1.0.1.dpkg -source=corporate
-```
 
 ## Pushing multiple files
 
 `dpm pack` typically produces several `.dpkg` files (one per compiler / platform). Each must be pushed. On the command line you can loop over the output folder:
 
 ```bat
-for %f in (.\output\*.dpkg) do dpm push "%f" -source=corporate
+for %f in (.\output\*.dpkg) do dpm push "%f" -source=dpm
 ```
 
 If a package and version already exist on the source, use `-skipDuplicate` so the push skips it instead of failing - handy when re-running a publish step:
 
 ```bat
-dpm push .\output\*.dpkg -source=corporate -skipDuplicate
+dpm push .\output\*.dpkg -source=dpm -skipDuplicate
 ```
 
 ## Re-publishing and versions
