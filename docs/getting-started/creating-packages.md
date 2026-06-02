@@ -297,6 +297,7 @@ Example expansions are shown for Delphi 12.0 (Athens). The same variables work f
 | `$compilercodename$`        | Delphi release code name from 10.0 onwards, e.g. `Athens`. Empty string for XE-series compilers.   |
 | `$compilerwithcodename$`    | `$compiler$` plus a space and `$compilercodename$`, e.g. `delphi12.0 Athens`.                      |
 | `$compilerversion$`         | Internal Delphi compiler version as an integer string, e.g. `36`.                                  |
+| `$compilershortversion$`    | Simplified compiler version used by some - xe2-xe8, then 100, 101,102, 103,104,110,120,130        |
 | `$libsuffix$`               | DCC lib suffix for the compiler, e.g. `290` for Delphi 12.                                          |
 | `$bdsversion$`              | BDS / RAD Studio product version, e.g. `23.0` for Delphi 12.                                        |
 
