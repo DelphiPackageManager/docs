@@ -4,7 +4,7 @@ dpm.config files are yaml format files which store the location of the package c
 
 The default config file lives in `%APPDATA%\.dpm\dpm.config.yaml` - it will be created when first accessed.
 
-Most [dpm cli commmands](../commands/commands.md) have a -configFile option. If that is not specified, then dpm will look for a dpm.config file in the current folder. If that is not found, then the default config file will be used.
+Most [dpm cli commands](../commands/commands.md) have a -configFile option. If that is not specified, then dpm will look for a dpm.config file in the current folder. If that is not found, then the default config file will be used.
 
 **Example**
 

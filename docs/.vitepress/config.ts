@@ -30,6 +30,8 @@ export default defineConfig({
           { text: "IDE Integration", link: "/getting-started/ide-integration" },
           { text: "Creating Packages", link: "/getting-started/creating-packages" },
           { text: "Publishing Packages", link: "/getting-started/publishing-packages" },
+          { text: "Git Registry Packages", link: "/getting-started/git-registry-packages" },
+          { text: "Continuous Integration", link: "/getting-started/continuous-integration" },
           { text: "Known Issues", link: "/getting-started/known-issues" },
         ],
       },
@@ -42,6 +44,7 @@ export default defineConfig({
           { text: "Package Cache", link: "/concepts/package-cache" },
           { text: "Package Versioning", link: "/concepts/package-versioning" },
           { text: "Package Dependencies", link: "/concepts/package-dependencies" },
+          { text: "Bundled Dependencies", link: "/concepts/bundled-dependencies" },
           { text: "Version Range", link: "/concepts/version-range" },
           { text: "Package Signing", link: "/concepts/package-signing" },
           { text: "How it works", link: "/concepts/how-it-works" }

@@ -2,10 +2,12 @@
 
 Once you have built a package with [`dpm pack`](../commands/pack-command.md), you can publish it to a [package source](../concepts/package-sources.md) so that others (or your own projects) can install it. Publishing is done with the [`dpm push`](../commands/push-command.md) command.
 
-DPM supports two kinds of targets:
+DPM supports three kinds of package sources:
 
 - A **folder source** (local or UNC path) - `dpm push` simply copies the `.dpkg` file into the source folder.
 - A **server source** (an HTTPS DPM server such as `https://delphi.dev`) - `dpm push` uploads the file over HTTP and the server publishes it.
+- A **Git Repository** registry - a repository with package dspec.yaml files that point to other git repositories. See [git registry packages](./git-registry-packages.md)
+
 
 ## Before you push
 

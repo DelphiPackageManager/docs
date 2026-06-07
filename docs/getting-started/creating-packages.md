@@ -17,6 +17,7 @@ dpm pack VSoft.CommandLine.dspec.yaml -o=i:\dpmfeed
 | Key                       | Required | Description                                                                                  |
 | ------------------------- | -------- | -------------------------------------------------------------------------------------------- |
 | `min dpm client version`  | no       | Minimum DPM client version required to install or build this package. Note the literal spaces in the key. |
+| `packageKind`             | no       | Package kind: `dpm` (default) for standard pre-built packages, or `git` for packages built from source via a git registry. See [Git Registry Packages](./git-registry-packages.md). |
 | `metadata`                | yes      | Package identity and descriptive metadata.                                                    |
 | `variables`               | no       | Spec-wide variables, referenced as `$name$` (see [variables](#variables)).                     |
 | `targetPlatforms`         | yes      | Sequence of compiler / platform combinations this package supports.                            |
@@ -49,6 +50,7 @@ The `metadata` section identifies the package and provides descriptive informati
 | `authors`          | yes      | Sequence of author names.                                                                   |
 | `projectUrl`       | no       | URL of the project home page.                                                               |
 | `repositoryUrl`    | no       | URL of the source code repository.                                                          |
+| `repositoryType`   | no       | Repository type, e.g. `git`.                                                                 |
 | `repositoryBranch` | no       | Default branch name in the repository.                                                      |
 | `repositoryCommit` | no       | Specific commit hash, or `#HASH#` to be substituted at pack time.                            |
 | `license`          | no       | SPDX license identifier, e.g. `Apache-2.0`. See [SPDX License List](https://spdx.org/licenses/). |
@@ -199,6 +201,8 @@ Not every platform is valid for every compiler - older compilers only target Win
 | `source`       | Sequence of source-file entries to include in the package.                |
 | `build`        | Sequence of runtime package projects to build.                             |
 | `design`       | Sequence of design-time package projects to build.                         |
+| `package definitions` | Sequence of package projects for DPM to **generate** for source-only libraries that ship no `.dpk` / `.dproj`. Note the literal spaces in the key. |
+| `environmentVariables` | Mapping of IDE environment variables to set while the package is loaded in the IDE. |
 
 ### dependencies
 
@@ -212,12 +216,16 @@ dependencies:
     version: "[1.0.0,2.0.0]"
   - id: MyCompany.Shared
     version: $version$
+  - id: Indy.System
+    version: bundled
 ```
 
 | Field     | Required | Description                                                                                     |
 | --------- | -------- | ----------------------------------------------------------------------------------------------- |
 | `id`      | yes      | Dependency package id.                                                                          |
-| `version` | yes      | Version range. See [Version Range](../concepts/version-range.md) for the supported syntax.       |
+| `version` | yes      | Version range, or the special token `bundled`. See [Version Range](../concepts/version-range.md) for the range syntax. |
+
+> The special version `bundled` declares a dependency on a library that ships with the Delphi IDE (such as Indy) and has no DPM package. See [Bundled Dependencies](../concepts/bundled-dependencies.md).
 
 ### source
 
@@ -256,7 +264,7 @@ build:
 | `project`    | yes      | Path to a `.dpk` or `.dproj` file.                                                                |
 | `platforms`  | no       | Sequence of platforms to build. Defaults to the platforms of the enclosing `targetPlatforms` entry. |
 | `defines`    | no       | Semicolon-separated additional compiler defines.                                                  |
-| `references` | no       | Sequence of dependent runtime packages (dcp) that this project links against.                                |
+| `references` | no       | Extra package names (e.g. `vcl`, or sibling runtime packages) added to the generated package's `requires` clause and emitted as `<DCCReference>` entries when DPM generates the project (see [prepare](../commands/prepare-command.md)). |
 
 ### design
 
@@ -276,10 +284,80 @@ design:
 | `project`    | yes      | Path to a design-time `.dpk` or `.dproj`.                                                          |
 | `platforms`  | no       | Defaults to `Win32` (plus `Win64` from Delphi 12 onwards).                                          |
 | `defines`    | no       | Semicolon-separated compiler defines.                                                              |
-| `references` | no       | Sequence of dependent runtime packages (dcp) this design package links against.                                |
+| `references` | no       | Extra package names (e.g. `vcl`, or sibling runtime packages) added to the generated package's `requires` clause and emitted as `<DCCReference>` entries. `designide` is added automatically for design packages. |
 | `libPrefix`  | no       | Override library prefix. Defaults to `dcl`.                                                        |
 | `libSuffix`  | no       | Override library suffix, e.g. `280` for Delphi 12.                                                 |
 | `libVersion` | no       | Override library version string.                                                                   |
+
+### package definitions
+
+Some libraries ship only `.pas` source and no Delphi package projects (`.dpk` / `.dproj`) - this is common for `packageKind: git` source libraries. The `package definitions` section describes the package projects DPM should **generate** for such a library. On install, DPM renders the `.dpk` / `.dproj` into the package cache and the matching `build` / `design` entry compiles them, so consumers still get precompiled, IDE-installable packages.
+
+Note the literal space in the `package definitions` key - it is not camel case.
+
+```yaml
+package definitions:
+  - project: ./packages/MyLibR.dproj   # path + name to generate
+    kind: runtime                       # optional - inferred when omitted (see below)
+    requires:                           # extra requires beyond rtl
+      - vcl
+    files:                              # globs (same syntax as a source src)
+      - ./src/*.pas
+    exclude:                            # optional - file-name globs to drop
+      - "*.Tests.pas"
+    platforms: [Win32, Win64]           # optional - overrides targetPlatform platforms
+  - project: ./packages/MyLibDesign.dproj
+    kind: design
+    requires: [vcl, MyLibR]
+    files: [./design/*.pas, ./design/*.dfm]
+```
+
+| Field        | Required | Description                                                                                                                              |
+| ------------ | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `project`    | yes      | Path + name of the `.dproj` to generate. Must match the `build` / `design` entry that compiles it, so both resolve to the same cached file. |
+| `files`      | yes      | Globs for the units to include (`.pas` / `.inc` / `.rc` / `.res`; matching `.dfm` forms are pulled in automatically).                    |
+| `kind`       | no       | `runtime` or `design`. When omitted, `design` is inferred if `requires` contains `designide`, otherwise `runtime`.                       |
+| `requires`   | no       | Packages added to the dpk `requires` clause. `rtl` is always added; `designide` is added for design packages.                            |
+| `exclude`    | no       | Glob patterns (matched against file names) removed from the matched `files`.                                                            |
+| `platforms`  | no       | Overrides the enclosing `targetPlatforms` platforms; intersected with them when present.                                                |
+
+> **Note:** Because `kind` inference keys off `designide`, a design package that lists only `vcl` / `fmx` in its requires should set `kind: design` explicitly.
+
+### environment variables
+
+A template may declare IDE environment variables that DPM sets while the package is loaded in the IDE, and clears (restoring any previous value) when it is removed.
+
+```yaml
+templates:
+  - name: default
+    design:
+      - project: ./packages/MyLibDesign.dproj
+    environmentVariables:
+      MYLIBDIR: $packageDir$               # a custom variable pointing at the package
+      PATH: $packageDir$\Binary\Shared     # appended to PATH (never replaces it)
+```
+
+How they behave:
+
+- **Process environment only.** DPM sets these on the running IDE *process*, so the compiler / MSBuild and any DLLs the IDE loads inherit them. It does **not** write the IDE's persistent registry environment variables, so they are not the same as Tools \| Options `$(Var)` project macros. State is session-scoped and rebuilt each time the package is restored / loaded.
+- **Distinct from `variables`.** The [variables](#variables) section is pack-time text substitution baked into the spec when packing; `environmentVariables` are applied on the consumer machine at install / load time.
+- **`PATH` is append-only.** The `PATH` key (case-insensitive) is appended to (semicolon-separated directories supported) and reference counted - never replaced. Directories present on `PATH` at IDE startup are never removed.
+- **Conflict policy.** For a non-`PATH` variable that already exists in the process environment, its value is captured, overwritten, and restored when the last package that set it is removed.
+
+Values are expanded in two stages:
+
+| Stage              | What is expanded                                                                                                                       |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Pack time          | Package- and `targetPlatforms`-level `variables`, plus the [built-in compiler variables](#built-in-variables) (e.g. `$compiler$`, `$bdsversion$`), resolved per compiler. |
+| Install time (IDE) | `$packageDir$` resolves to the package's cache folder on the consumer machine. Use it to point a variable at a file shipped inside the package. |
+
+> **`$packageDir$` is exclusive to `environmentVariables` values.** They are the only values DPM processes at install time, so using `$packageDir$` anywhere else in the spec (a `src`, `project`, `dest`, regular `variables` value, etc.) is an **error at pack time**.
+
+For system stability and to prevent executable-hijack redirection, packing **fails** if a package declares any of a set of reserved variable names (compared case-insensitively). `PATH` is allowed (append-only) and is not reserved. The reserved names are:
+
+- **Executable redirection:** `PATHEXT`, `COMSPEC`, `SYSTEMROOT`, `WINDIR`, `SYSTEMDRIVE`.
+- **OS / user profile:** `TEMP`, `TMP`, `USERPROFILE`, `PUBLIC`, `HOMEDRIVE`, `HOMEPATH`, `APPDATA`, `LOCALAPPDATA`, `PROGRAMDATA`, `ALLUSERSPROFILE`, `PROGRAMFILES`, `PROGRAMFILES(X86)`, `PROGRAMW6432`, `COMMONPROGRAMFILES` (and `(X86)` / `W6432`), `USERNAME`, `USERDOMAIN`, `COMPUTERNAME`, `LOGONSERVER`, `OS`, `NUMBER_OF_PROCESSORS`, `PROCESSOR_ARCHITECTURE` (and `W6432`), `PROCESSOR_IDENTIFIER`.
+- **RAD Studio built-ins:** `BDS`, `BDSBIN`, `BDSINCLUDE`, `BDSLIB`, `BDSCOMMONDIR`, `BDSUSERDIR`, `BDSPROJECTSDIR`, `BDSPLATFORMSDKSDIR`, `BDSCATALOGREPOSITORY` (and `ALLUSERS`), `DELPHI`, `BCB`, `FRAMEWORKDIR`, `FRAMEWORKVERSION`.
 
 ## variables
 
