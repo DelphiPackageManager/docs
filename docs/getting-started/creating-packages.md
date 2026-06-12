@@ -240,13 +240,20 @@ source:
       - "Test*.pas"
   - src: ./inc/*.inc
     dest: inc
+  - src: ./resources/*.res
+    dest: src
+    copyToLib: true
+  - src: ./bin/Win32/*.dll
+    copyToBin: Win32
 ```
 
-| Field     | Required | Description                                                                                          |
-| --------- | -------- | ---------------------------------------------------------------------------------------------------- |
-| `src`     | yes      | Relative path or glob describing which files to include. Supports `*`, `**`, and `*.ext`.             |
-| `dest`    | no       | Destination folder within the package. If omitted, the relative directory structure is preserved.    |
-| `exclude` | no       | Sequence of glob patterns to exclude from this `src`.                                                |
+| Field       | Required | Description                                                                                          |
+| ----------- | -------- | ---------------------------------------------------------------------------------------------------- |
+| `src`       | yes      | Relative path or glob describing which files to include. Supports `*`, `**`, and `*.ext`.             |
+| `dest`      | no       | Destination folder within the package. If omitted, the relative directory structure is preserved.    |
+| `exclude`   | no       | Sequence of glob patterns to exclude from this `src`.                                                |
+| `copyToLib` | no       | When `true`, the matched files are also copied into the `lib\{platform}` folder during install. Typically needed for `.res` and `.dfm` files that must sit alongside the compiled units. Defaults to `false`. |
+| `copyToBin` | no       | A platform name, e.g. `Win32`. The matched files are copied into the `bpl\{platform}` folder during install (e.g. `bpl\win32`) - used for DLLs and other files needed when the package is loaded. |
 
 ### build
 
