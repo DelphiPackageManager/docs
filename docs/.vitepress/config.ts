@@ -80,6 +80,9 @@ export default defineConfig({
       },
     ],
 
+    search: {
+      provider: 'local',
+    },
     socialLinks: [{ icon: "github", link: "https://github.com/DelphiPackageManager/docs" }],
     footer: {
       copyright: 'Copyright © 2023 - present : <a href="https://github.com/DelphiPackageManager/DPM/people">DPM Dev team</a>. All Rights Reserved.',

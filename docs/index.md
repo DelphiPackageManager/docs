@@ -3,8 +3,8 @@
 layout: home
 
 hero:
-  name: "DPM Documentation"
-  tagline: The Delphi Package Manager
+  name: "DPM Package Manager"
+  tagline: Modern dependency management for Delphi.
   image:
     src: /images/dpm-large.png
   actions:
@@ -20,10 +20,10 @@ features:
     details: Comprehensive IDE integration
     link: /getting-started/ide-integration
     icon:
-      src: /images/dpm_48.png
+      src: /images/dpm_32.png
   - title: Command Line tool
     details: Work from the command line (great for CI)
     link: /commands/commands
     icon:
-      src: /images/dpm_48.png
+      src: /images/dpm_32.png
 ---

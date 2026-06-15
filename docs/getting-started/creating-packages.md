@@ -201,6 +201,7 @@ Not every platform is valid for every compiler - older compilers only target Win
 | `source`       | Sequence of source-file entries to include in the package.                |
 | `build`        | Sequence of runtime package projects to build.                             |
 | `design`       | Sequence of design-time package projects to build.                         |
+| `copyLocal`    | Sequence of extra files (e.g. native dlls) always copied from the package cache into a consuming project's build output folder at build time. Referenced runtime bpls are copied automatically and need no entry. |
 | `package definitions` | Sequence of package projects for DPM to **generate** for source-only libraries that ship no `.dpk` / `.dproj`. Note the literal spaces in the key. |
 | `environmentVariables` | Mapping of IDE environment variables to set while the package is loaded in the IDE. |
 
@@ -295,6 +296,46 @@ design:
 | `libPrefix`  | no       | Override library prefix. Defaults to `dcl`.                                                        |
 | `libSuffix`  | no       | Override library suffix, e.g. `280` for Delphi 12.                                                 |
 | `libVersion` | no       | Override library version string.                                                                   |
+
+### copyLocal
+
+DPM copies binaries a built application needs at runtime from the package cache into the **consuming project's build output folder** (next to the produced executable) at build time. There are two mechanisms:
+
+#### Automatic runtime BPL copy
+
+When a consuming project links DPM packages dynamically (the IDE's *Link with runtime packages* option / `UsePackages`), the runtime `.bpl`s it links must sit beside the exe at runtime. **DPM copies these automatically - you do not declare them.** For every package the project references, DPM looks at which of that package's runtime packages the project actually links (the runtime package name appears in the project's `$(DCC_UsePackage)`) and copies the matching `.bpl` from the cache.
+
+The match uses the package's own `.dcp` files as the authority: a `$(DCC_UsePackage)` token equals a `.dcp` base name (e.g. `Sempare.TemplateR`), and the paired bpl is that name plus the compiler lib suffix (e.g. `Sempare.TemplateR370.bpl`). Design-time bpls are never copied (their library name never appears in `$(DCC_UsePackage)`), and projects that link statically (the default) copy nothing - the library is compiled into the exe.
+
+No `copyLocal` entry is needed for runtime bpls.
+
+#### Explicit `copyLocal` entries
+
+Use `copyLocal` for **other** files the application needs beside the exe - typically native DLLs. Explicit entries are **always** copied (platform filter permitting). Unlike `source` (which can only reference files that exist at pack time), `copyLocal` globs are matched against the installed package **cache**, so they can target artifacts produced *during install*.
+
+```yaml
+copyLocal:
+  - src: bin/$platform$/*.dll
+    platforms: [Win32, Win64]
+```
+
+| Field       | Required | Description                                                                                                          |
+| ----------- | -------- | ------------------------------------------------------------------------------------------------------------------- |
+| `src`       | yes      | Ant-style glob, relative to the package root, of the files to copy. May contain the `$platform$` token (e.g. `bin/$platform$/*.dll`), which resolves to the build platform's folder name (`Win32`, `Win64`, ...). |
+| `platforms` | no       | Platforms this entry applies to. Omit (or leave empty) to apply to all platforms.                                   |
+
+Files are flattened into the output folder (the directory structure under `src` is not preserved); a file already present and identical is skipped, and a file matched by both an explicit entry and the automatic bpl pass is copied only once.
+
+> **Migration note.** Earlier DPM required an explicit `copyLocal` entry with `mode: runtimeOnly` (e.g. `src: bpl/$platform$/*.bpl`) to ship runtime bpls. The `mode` field has been removed and runtime bpls are now automatic - **delete any such runtime-bpl entry from your spec.** A leftover `bpl/$platform$/*.bpl` entry now copies *every* bpl in the folder unconditionally (including design bpls), which is not what you want. Native-DLL entries are unaffected.
+
+**When the copy runs**
+
+- **Command-line / MSBuild builds** - DPM imports a small `DPM.CopyLocal.targets` into the project that runs `dpm copylocal` after the build.
+- **IDE builds** - the DPM IDE plugin runs the same copy after a successful compile.
+
+In both cases nothing is copied for a project that doesn't reference the package.
+
+> **`copyLocal` vs `source`'s `copyToBin`.** `copyToBin` copies files *into* the package cache's `bpl\{platform}` folder during **install**; `copyLocal` copies *out of* the cache into the **consuming project's output folder** at **build** time. They are often used together - e.g. `copyToBin` to stage a prebuilt DLL into the cache, then `copyLocal` to deploy it beside the exe.
 
 ### package definitions
 

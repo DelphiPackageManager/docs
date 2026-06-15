@@ -1,7 +1,5 @@
 ## Getting Started
 
-Note that DPM is still very much alpha software, things are subject to change.
-
 ### Installing
 
 Download the latest installer from github (it is codesigned, as are the dll's and command line exe) :
