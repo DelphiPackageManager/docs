@@ -10,7 +10,7 @@ On install, DPM clones that repository at the resolved commit directly into the 
 
 ::: danger
 It should be noted that we do not recommend using this feature for externally hosted packages - it has a number of potential security issues. If the registry repo is compromised, packages could be hijacked to a fork and malicious code could be injected into your applications. Even tags are not safe - tags can be moved. 
-::: danger
+:::
 
 ---
 
