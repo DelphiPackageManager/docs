@@ -16,7 +16,7 @@ dpm sources <operation> -name=<name> -source=<source> [-type=<type>] [options]
 | -------------- | ---------------------------------------------------------------------------------------------------------- |
 | name (-n)      | The source name.                                                                                            |
 | source (-s)    | The source URL or path.                                                                                     |
-| type (-t)      | The source type: `Folder`, `DPMServer`, `GitHubDPM`, or `GitHubDN`.                                          |
+| type (-t)      | The source type: `Folder`, `DPMServer` 
 | format (-f)    | Applies to the `List` action. `Detailed` (default) or `Short`.                                              |
 | userName (-u)  | User name for authenticating with the source.                                                               |
 | password (-p)  | Password for authenticating with the source. See note below.                                                |
@@ -37,6 +37,4 @@ dpm sources Add -name=DPMOrg -source=https://delphi.dev/api/v2/index.json -type=
 dpm sources Disable -name=MyServer
 
 dpm sources Enable -name=DPMOrg
-
-dpm sources add -name=foo.bar -source=C:\dpm\local -username=foo -password=bar -configfile=%AppData%\.dpm\my.config
 ```
