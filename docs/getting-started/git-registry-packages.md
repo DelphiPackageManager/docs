@@ -6,10 +6,11 @@ requiring pre-built `.dpkg` files pushed to a DPM server.
 A registry is a collection of `.dspec.yaml` files (one folder per package id). Each
 dspec points at the package's own git repository, using git tags for versions.
 
-On install, DPM clones that
-repository at the resolved commit directly into the package cache and builds it (or,
-for source-only packages, adds its source folders to the project search paths). No
-`.dpkg` is produced and nothing is pushed to a server.
+On install, DPM clones that repository at the resolved commit directly into the package cache and builds it (or, for source-only packages, adds its source folders to the project search paths). No `.dpkg` is produced and nothing is pushed to a server.
+
+::: danger
+It should be noted that we do not recommend using this feature for externally hosted packages - it has a number of potential security issues. If the registry repo is compromised, packages could be hijacked to a fork and malicious code could be injected into your applications. Even tags are not safe - tags can be moved. 
+::: danger
 
 ---
 
