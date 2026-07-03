@@ -5,6 +5,9 @@ export default defineConfig({
   title: "DPM Documentation",
   description: "Documentation",
   head: [["link", { rel: "icon", href: "/favicon.png" }]],
+  sitemap: {
+    hostname: 'https://docs.delphi.dev'
+  },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
