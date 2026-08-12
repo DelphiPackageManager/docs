@@ -24,7 +24,7 @@ DPM then checks it's [package cache](./package-cache) to see if it already has t
 
 If the package is not already cached, dpm downloads it from the registered [source](./package-sources) and extracts the package file into the package cache. This provides us with access to the package manifest. If the packaged was was signed then the signatures (repository, author or both) are checked against the package contents.
 
-Using the package.dspec.yaml , we then start the package [dependency resolution](./package-dependencies) process, which walks the dependency tree to ensure that all dependencies can be resolved. The dependent packages are also downloaded to the package cache during this process.
+Using the package.dspec , we then start the package [dependency resolution](./package-dependencies) process, which walks the dependency tree to ensure that all dependencies can be resolved. The dependent packages are also downloaded to the package cache during this process.
 
 When all the dependencies are met, the dproj is updated with the package references (id and version) and the collected search paths are added to the base configuration for each platform. Note that the command line default is to attempt to install the package for all supported platforms that are enabled in the project.
 

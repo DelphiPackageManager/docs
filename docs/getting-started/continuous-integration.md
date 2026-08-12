@@ -169,11 +169,11 @@ To publish your own packages from CI, run the release pipeline in this order:
 
 ### 1. Pack
 
-`dpm pack` builds a `.dpkg` from a `.dspec.yaml`. Override the version from CI (e.g.
+`dpm pack` builds a `.dpkg` from a `.dspec`. Override the version from CI (e.g.
 your build number) so each build produces a uniquely-versioned package:
 
 ```cmd
-dpm --nobanner pack .\MyPackage.dspec.yaml -version=%BUILD_VERSION% -outputfolder=.\artifacts
+dpm --nobanner pack .\MyPackage.dspec -version=%BUILD_VERSION% -outputfolder=.\artifacts
 ```
 
 ### 2. Sign
@@ -350,7 +350,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Pack, sign, verify, push
         run: |
-          dpm --nobanner pack .\MyPackage.dspec.yaml -version=${{ github.ref_name }} -outputfolder=.\artifacts
+          dpm --nobanner pack .\MyPackage.dspec -version=${{ github.ref_name }} -outputfolder=.\artifacts
           dpm sign .\artifacts\*.dpkg -pfx=%CODESIGN_PFX% -pfx-password-env=PFX_PWD
           for %%f in (.\artifacts\*.dpkg) do dpm verify "%%f" || exit /b 1
           for %%f in (.\artifacts\*.dpkg) do dpm push "%%f" -source=corporate -apiKey=%DPM_APIKEY% -skipDuplicate
@@ -376,7 +376,7 @@ hard-coding it.
 :: stage script (Execute Program actions)
 set DPMPACKAGECACHE=$Workspace$\.dpmcache
 dpm --nobanner restore .\MyProject.dproj
-dpm --nobanner pack .\MyPackage.dspec.yaml -version=$Version$ -outputfolder=.\artifacts
+dpm --nobanner pack .\MyPackage.dspec -version=$Version$ -outputfolder=.\artifacts
 dpm push .\artifacts\*.dpkg -source=corporate -apiKey=$DPM_APIKEY$ -skipDuplicate
 ```
 
@@ -412,7 +412,7 @@ publish:
   rules:
     - if: $CI_COMMIT_TAG
   script:
-    - dpm --nobanner pack .\MyPackage.dspec.yaml -version=$CI_COMMIT_TAG -outputfolder=.\artifacts
+    - dpm --nobanner pack .\MyPackage.dspec -version=$CI_COMMIT_TAG -outputfolder=.\artifacts
     - dpm sign .\artifacts\*.dpkg -pfx=$CODESIGN_PFX -pfx-password-env=PFX_PWD
     - dpm push .\artifacts\*.dpkg -source=corporate -apiKey=$DPM_APIKEY -skipDuplicate
 ```
@@ -450,7 +450,7 @@ pipeline {
       steps {
         withCredentials([string(credentialsId: 'dpm-apikey', variable: 'DPM_APIKEY')]) {
           bat '''
-            dpm --nobanner pack .\\MyPackage.dspec.yaml -version=%TAG_NAME% -outputfolder=.\\artifacts
+            dpm --nobanner pack .\\MyPackage.dspec -version=%TAG_NAME% -outputfolder=.\\artifacts
             dpm push .\\artifacts\\*.dpkg -source=corporate -apiKey=%DPM_APIKEY% -skipDuplicate
           '''
         }

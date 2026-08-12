@@ -1,13 +1,13 @@
 # Creating Packages
 
-DPM packages are defined by a YAML spec file with the extension `.dspec.yaml`. The spec describes the package, the compiler / platform combinations it supports, the source files and projects to include, and any dependencies on other packages.
+DPM packages are defined by a YAML spec file with the extension `.dspec`. The spec describes the package, the compiler / platform combinations it supports, the source files and projects to include, and any dependencies on other packages.
 
 Scaffold a starter spec with [`dpm spec`](../commands/spec-command.md) and build it with [`dpm pack`](../commands/pack-command.md):
 
 ```bat
 dpm spec VSoft.CommandLine
 
-dpm pack VSoft.CommandLine.dspec.yaml -o=i:\dpmfeed
+dpm pack VSoft.CommandLine.dspec -o=i:\dpmfeed
 ```
 
 `dpm pack` produces one `.dpkg` file per compiler / platform combination defined in `targetPlatforms`.
@@ -510,7 +510,7 @@ templates:
 
 ## See also
 
-- [spec command](../commands/spec-command.md) - scaffold a new `.dspec.yaml`.
+- [spec command](../commands/spec-command.md) - scaffold a new `.dspec`.
 - [pack command](../commands/pack-command.md) - build `.dpkg` files from a spec.
 - [prepare command](../commands/prepare-command.md) - generate per-compiler dpk/dproj subfolders.
 - [Version Range](../concepts/version-range.md) - the dependency version range syntax.

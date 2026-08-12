@@ -3,7 +3,7 @@
 DPM can consume packages whose definitions live in a **git registry** instead of
 requiring pre-built `.dpkg` files pushed to a DPM server. 
 
-A registry is a collection of `.dspec.yaml` files (one folder per package id). Each
+A registry is a collection of `.dspec` files (one folder per package id). Each
 dspec points at the package's own git repository, using git tags for versions.
 
 On install, DPM clones that repository at the resolved commit directly into the package cache and builds it (or, for source-only packages, adds its source folders to the project search paths). No `.dpkg` is produced and nothing is pushed to a server.
@@ -27,7 +27,7 @@ dpm sources add -name localreg   -source C:\work\dpm-registry
 
 DPM auto-detects the `GitDirectory` source type when the source is a git URL
 (`*.git`, `git@…`, `ssh://…`) or a folder already laid out as a registry (a
-sub-folder containing an `<id>.dspec.yaml`). If auto-detection can't tell (e.g. an
+sub-folder containing an `<id>.dspec`). If auto-detection can't tell (e.g. an
 empty folder, or an `https` URL without a `.git` suffix), set it explicitly:
 
 ```
@@ -96,14 +96,14 @@ history, not from uploaded artifacts.
 
 ### Layout
 
-One folder per package id, each containing `<id>.dspec.yaml`:
+One folder per package id, each containing `<id>.dspec`:
 
 ```
 dpm-registry/
   Acme.Widgets/
-    Acme.Widgets.dspec.yaml
+    Acme.Widgets.dspec
   Acme.Core/
-    Acme.Core.dspec.yaml
+    Acme.Core.dspec
 ```
 
 ### The registry dspec
@@ -172,7 +172,7 @@ subfolder that contains source.)
 ### Per-version build / the package's own dspec
 
 The registry dspec applies to all versions, **but if the cloned repo contains its
-own `*.dspec.yaml` at the resolved commit, that one wins** for the build. The
+own `*.dspec` at the resolved commit, that one wins** for the build. The
 registry dspec remains the fallback and is always the source DPM uses for **version
 discovery and dependency resolution** (it can't clone every candidate while
 resolving). Keep the registry dspec's `dependencies` accurate even if the repo
@@ -186,5 +186,5 @@ provides its own build spec.
 |---|---|
 | Discover | Reads the registry catalog; lists versions from `git ls-remote --tags <repositoryUrl>` (no tags → `0.0.1`). |
 | Resolve | Builds dependency info from the registry dspec. |
-| Install | Clones the repo at the resolved tag/HEAD into `%APPDATA%\.dpm\package_cache\<compiler>\<id>\<version>\`, writes `package.dspec.yaml`, drops a `.dpm-git-commit` marker. |
+| Install | Clones the repo at the resolved tag/HEAD into `%APPDATA%\.dpm\package_cache\<compiler>\<id>\<version>\`, writes `package.dspec`, drops a `.dpm-git-commit` marker. |
 | Build | Compiles `build`/`design` projects if present; otherwise adds the `src` folders to the project search paths. |

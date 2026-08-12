@@ -45,11 +45,11 @@ The rest of this post is for people that want to compile or contribute or create
 
 ### Creating packages
 
-Scaffold a starter `.dspec.yaml` with [`dpm spec`](../commands/spec-command.md) and edit it to suit your package. See [Creating Packages](./creating-packages.md) for the full spec reference.
+Scaffold a starter `.dspec` with [`dpm spec`](../commands/spec-command.md) and edit it to suit your package. See [Creating Packages](./creating-packages.md) for the full spec reference.
 
 To build the package files, run:
 
-`dpm pack My.Package.dspec.yaml -o=c:\mypackagefolder`
+`dpm pack My.Package.dspec -o=c:\mypackagefolder`
 
 That will generate 1 file per compiler/platform combination.
 

@@ -1,6 +1,6 @@
 # Spec command
 
-Generates a `package.dspec.yaml` for a new package. When run in a folder that contains a `.dproj`, the generated spec is tokenised based on that project so you can fill in the details and pack it.
+Generates a `package.dspec` for a new package. When run in a folder that contains a `.dproj`, the generated spec is tokenised based on that project so you can fill in the details and pack it.
 
 See [Creating Packages](../getting-started/creating-packages.md) for the full authoring guide.
 
@@ -16,7 +16,7 @@ dpm spec [packageId]
 
 | Option           | Description                                                                       |
 | ---------------- | --------------------------------------------------------------------------------- |
-| overwrite (-o)   | Overwrite an existing `.dspec.yaml` in the current folder without prompting.       |
+| overwrite (-o)   | Overwrite an existing `.dspec` in the current folder without prompting.       |
 | noflatten (-n)   | Do not flatten the source folder structure when listing files in the spec.         |
 
 ## Examples

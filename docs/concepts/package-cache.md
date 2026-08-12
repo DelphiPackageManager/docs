@@ -36,7 +36,7 @@ packages\delphi13.0\VSoft.CommandLine\0.0.1
 packages\delphi13.0\VSoft.CommandLine\0.0.2
 ```
 
-The structure inside the version folders will be dependent on the settings in the package dspec file used when the package was created. There will be a package.dspec.yaml file in the root of the version folder. You should not modifiy this file!
+The structure inside the version folders will be dependent on the settings in the package dspec file used when the package was created. There will be a package.dspec file in the root of the version folder. You should not modifiy this file!
 
 ## What if I delete the folder
 
