@@ -68,6 +68,7 @@ export default defineConfig({
           { text: "mcp", link: "/commands/mcp-command" },
           { text: "pack", link: "/commands/pack-command" },
           { text: "prepare", link: "/commands/prepare-command" },
+          { text: "project", link: "/commands/project-command" },
           { text: "push", link: "/commands/push-command" },
           { text: "restore", link: "/commands/restore-command" },
           { text: "sbom", link: "/commands/sbom-command" },
