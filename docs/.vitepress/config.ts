@@ -23,6 +23,7 @@ export default defineConfig({
           { text: "Contributing", link: "contributing" },
           { text: "Compiler Versions", link: "compiler-versions" },
           { text: "Platforms", link: "platforms" },
+          { text: "Error Codes", link: "error-codes" },
         ],
       },
       {
