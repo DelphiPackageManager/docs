@@ -19,7 +19,7 @@ dpm install <packageId> [projectPath] [options]
 | version        | The package version to install. If omitted, the latest version is downloaded.                                                                          |
 | compiler (-c)  | The Delphi compiler version to target. If not specified, the version is detected from the `.dproj` file. See [compiler-versions](../compiler-versions.md). |
 | platforms (-p) | Comma-separated platforms to install for. Default is all platforms the project targets. See [platforms](../platforms.md).                              |
-| group (-g)     | The project group the projects belong to. Used to ensure package compatibility.                                                                        |
+| group (-g)     | Not supported yet - it has no effect (DPMW0108). To keep a group's projects on one version of each package, install into the `.groupproj` itself.        |
 | sources (-s)   | Source(s) from which to install. May be specified multiple times. If omitted, sources from the configuration file are used.                            |
 | preRelease (-pr) | Allow installation of pre-release packages.                                                                                                          |
 | force          | Force install of the package even if it is already installed.                                                                                          |

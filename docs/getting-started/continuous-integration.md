@@ -65,6 +65,10 @@ Recommendations for CI:
   compiler) installed for the target compiler version.
 - **Quieter output.** Pass `--nobanner` to suppress the startup banner and
   `--verbosity=Quiet|Normal|Detailed` to control log volume.
+- **No prompts.** DPM never waits for an answer when its input or output is redirected,
+  which is how a CI agent runs it: a command that would ask takes its non-interactive path,
+  or fails with [DPME0107](../error-codes.md#dpme0107) naming the option to pass instead.
+  `--non-interactive` makes the same choice in a console.
 
 ```cmd
 dpm --nobanner restore .\MyProject.dproj

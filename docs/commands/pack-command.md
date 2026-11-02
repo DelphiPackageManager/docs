@@ -12,7 +12,7 @@ dpm pack <.dspec file> [options]
 
 | Option                       | Description                                                                                                                                                                  |
 | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| excludeEmptyDirectories (-e) | Prevent inclusion of empty directories when building the package.                                                                                                             |
+| excludeEmptyDirectories (-e) | Has no effect - empty directories are never included in a package.                                                                                                             |
 | outputfolder (-o)            | Directory in which the created `.dpkg` file is written. Defaults to the current directory.                                                                                    |
 | basepath (-b)                | Base path of the files referenced by the `.dspec`. Defaults to the directory containing the `.dspec`.                                                               |
 | minclientversion (-mc)       | Set the `minClientVersion` attribute on the created package. Overrides any value in the `.dspec`.                                                                        |

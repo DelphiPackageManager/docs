@@ -141,6 +141,14 @@ The command asks before it does something that can't be undone, but its input is
 
 **What to do:** Run it in a console, or pass the option the message names (eg `--force`) to go ahead without asking.
 
+### DPMW0108
+
+**A command line option has no effect.**
+
+The command accepts the option, but doesn't act on it yet - `dpm install --group`, for example, doesn't take the group's other projects into account. The message says what to do instead.
+
+**What to do:** Drop the option, and do what the message suggests (for `--group`, install into the `.groupproj` itself).
+
 ### DPME0201
 
 **Unable to load the configuration file.**
@@ -170,7 +178,9 @@ The command needs a configuration file, and the one it was given (or the default
 
 **Unable to check for a newer version of DPM.**
 
-`dpm upgrade` couldn't get the list of DPM releases from GitHub, or the newest release has no installer attached. The message says why - GitHub limits how often a computer can ask, so `rate limited` usually just means trying again later.
+`dpm upgrade` couldn't get the list of DPM releases from GitHub, or the newest release has no installer DPM will download. The message says why - GitHub limits how often a computer can ask, so `rate limited` usually just means trying again later.
+
+DPM only downloads an installer named `DPMSetup-<version>.exe` from an `https` address on GitHub (`github.com`, `objects.githubusercontent.com` or `release-assets.githubusercontent.com`). A release whose installer is named or hosted any other way is reported here instead of being downloaded.
 
 **What to do:** Check you can reach https://api.github.com, then try again.
 
@@ -197,6 +207,24 @@ The installer for the new version couldn't be downloaded or saved. The message s
 The installer was downloaded but couldn't be started.
 
 **What to do:** Run the installer from the path in the message yourself.
+
+### DPME0306
+
+**The DPM installer is not validly signed.**
+
+After downloading an upgrade, and again just before starting it, DPM asks Windows to check the installer's Authenticode signature, including whether any certificate in the chain has been revoked. The installer is only run when Windows reports a valid signature that chains to a trusted root. The message says what was wrong - for example the file isn't signed, it was changed after it was signed, or its certificate has been revoked. The installer is deleted.
+
+If the message says the revocation status couldn't be checked, Windows couldn't reach the certificate authority's revocation servers - a proxy or firewall that blocks them causes this.
+
+**What to do:** Try again. If it keeps happening, download the installer from the DPM releases page on GitHub and check its signature (right click > Properties > Digital Signatures) before running it.
+
+### DPME0307
+
+**The downloaded DPM installer does not match its published hash.**
+
+GitHub publishes a SHA-256 hash for each release file. The installer DPM downloaded has a different hash, so it was damaged or changed on the way. It is deleted without being run.
+
+**What to do:** Try again. If it keeps happening, something between you and GitHub is changing downloads - download the installer from the DPM releases page instead.
 
 ### DPMW0305
 
@@ -253,6 +281,17 @@ while can be disabled with `dpm sources disable` until it's back.
 `dpm sources add` was given a name that is already used by a configured source.
 
 **What to do:** Pick another name, or change the existing source with `dpm sources update`.
+
+### DPMW1006
+
+**A disabled package source is not valid.**
+
+A source in the configuration has a uri DPM can't parse, or one whose scheme isn't `file`, `http` or
+`https` - as for DPME1002 - but the source is disabled, so nothing uses it and DPM carries on with the
+others. The message names the source.
+
+**What to do:** Fix or remove the source with `dpm sources update` / `dpm sources remove` before you
+enable it again.
 
 ### DPME1101
 
@@ -391,10 +430,11 @@ package in the other project first.
 
 **Dependency resolution did not finish.**
 
-DPM tried too many combinations of versions without settling. This is most likely a cycle in the packages'
-dependencies.
+DPM tried too many combinations of versions without finding one that works, and stopped. Packages with many
+versions whose dependencies rule each other out can do this.
 
-**What to do:** Report it, with the packages being installed, to the package authors or as a DPM bug.
+**What to do:** Install specific versions of the packages rather than letting DPM choose, or report it, with
+the packages being installed, as a DPM bug.
 
 ### DPME2005
 
@@ -469,6 +509,16 @@ The install failed because other packages installed in the projects need to move
 The warning lists them.
 
 **What to do:** Use Upgrade in the IDE, or `--upgrade` on the command line, to install them together.
+
+### DPME2013
+
+**Packages depend on each other in a cycle.**
+
+A package needs another that, directly or through others, needs the first one again. Delphi can't build
+packages that depend on each other, so DPM doesn't install them. The message shows the cycle.
+
+**What to do:** Report it to the authors of the packages in the cycle - one of them has to drop the
+dependency.
 
 ## Install, restore, uninstall and the package cache (3xxx)
 
@@ -613,6 +663,40 @@ you build.
 
 **What to do:** Check you can write to the package cache folder.
 
+### DPME3017
+
+**A package id is not valid.**
+
+A package source gave DPM a package whose id isn't a valid package id - one with a path in it (`..\`, `\` or
+a drive), for example. The id names the package's folder in the package cache, so DPM won't use it. The
+message names the id.
+
+**What to do:** Report it to whoever runs the package source. If it's a folder source, check where the
+package file came from.
+
+### DPMW3018
+
+**Files in a cached package were missing or modified and have been restored.**
+
+`dpm cache verify` re-hashed the files of an extracted package against the package's signed manifest and
+found some that were missing or had changed - edited while debugging with "use source", for example, or
+damaged on disk. DPM restored them from the verified package file. Compiled output (`lib\`, `bpl\`) is not
+part of the manifest and is left alone. The message lists the files.
+
+**What to do:** Nothing - the package is intact again. If you edited a cached package's source on purpose,
+make the change in the package's own repository instead.
+
+### DPME3019
+
+**Another DPM process is using the package in the cache.**
+
+DPM installs and repairs a cached package one process at a time, so the IDE, the command line and parallel
+builds sharing a cache don't take apart what another is putting together. Another process has been working on
+this package for more than 5 minutes.
+
+**What to do:** Wait for the other DPM process (an install or restore in the IDE, another build) to finish and try
+again. If none is running, a stuck process may still hold it - end it.
+
 ## Project files (4xxx)
 
 ### DPME4001
@@ -751,7 +835,8 @@ None of the platforms given with `--platforms` is enabled in the project.
 **The Delphi compiler is not installed.**
 
 The package needs to be compiled with a Delphi version that isn't installed on this machine - DPM couldn't
-find its install location in the registry.
+find its install location (`RootDir` under `Software\Embarcadero\BDS\<version>`, in `HKEY_CURRENT_USER` or
+`HKEY_LOCAL_MACHINE`).
 
 **What to do:** Install that Delphi version, or use the compiler you have (`--compiler=<version>`).
 
@@ -785,8 +870,10 @@ build it.
 
 **A package project would run commands during the build.**
 
-The package's project contains msbuild targets, tasks or imports that would run commands when it's built.
-DPM compiles packages, it doesn't run them, so it won't build this package.
+The package's project contains msbuild targets, tasks or imports that would run commands when it's built, or
+sets a property that decides what the Delphi build targets import (`GlobalOptionFile`, `BDS`, `APPDATA`,
+`BDSAppDataBaseDir`, `EnvOptions`, `EnvironmentSettings`, `Profiles`, `ProductVersion` or `ImportEnvOptions`) -
+no project the IDE writes sets one. DPM compiles packages, it doesn't run them, so it won't build this package.
 
 **What to do:** Report it to the package author.
 
@@ -829,11 +916,15 @@ package again then.
 **Unable to compile design-time packages for the IDE platform.**
 
 The design-time packages are compiled for the platform the IDE runs on as well as the project's platforms,
-and that build failed. The project's own platforms are fine, but the design components may not load in the
-IDE. The message includes the first problem.
+and some of them couldn't be built for it. The project's own platforms are fine, but those design components
+won't load in the IDE. The message lists each package and why: it failed to compile (with its first problem),
+it doesn't support the IDE's platform, or it needs a package that couldn't be built. The other packages are
+still built and loaded.
 
-**What to do:** Check the problem the message gives. Run with `--verbosity=Debug` (or set the IDE's DPM log
-level to Debug) to see the compiler output.
+**What to do:** For a compile failure, check the problem the message gives - run with `--verbosity=Debug` (or
+set the IDE's DPM log level to Debug) to see the compiler output. A package that doesn't support the IDE's
+platform (for example a Win32-only package in the 64-bit IDE) can only have its design components loaded by an
+IDE running on a platform it supports.
 
 ### DPMW5011
 
@@ -848,7 +939,8 @@ for this one. It builds the project anyway.
 
 **A package path resolves outside the package folder.**
 
-A search path or project in the package's spec points outside the package's own folder, so DPM ignores it.
+A search path, a `copyToLib` / `copyToBin` file pattern or a prebuilt design package in the package's spec
+points outside the package's own folder, so DPM ignores it.
 
 **What to do:** Report it to the package author.
 
@@ -905,6 +997,17 @@ are no platform specific settings, so the build may still fail.
 
 **What to do:** Nothing, unless the build then fails - then report it to the package author.
 
+### DPME5019
+
+**A package project is outside the package folder.**
+
+A build or design project in the package's spec is an absolute path, or a path that leads out of the
+package's own folder (with `..`, for example). DPM only reads, adjusts and builds projects inside the
+package, so it doesn't install the package. The message names the package and the path.
+
+**What to do:** Report it to the package author. Spec paths are relative to the package folder, for example
+`/packages/Rad Studio 12/MyLib.dproj`.
+
 ## Package specs, pack, push and prepare (6xxx)
 
 ### DPME6001
@@ -920,7 +1023,8 @@ The `.dspec` file given (or the one found) doesn't exist.
 **The spec file could not be read.**
 
 The spec isn't valid YAML, doesn't have the `.dspec` or `.dspec.yaml` extension, or has no `metadata` - so it
-probably isn't a spec at all. The message says why.
+probably isn't a spec at all. Or a value has the wrong shape - a single value where a list belongs, or a list
+item that isn't a set of `key: value` lines - and the message names the key. The message says why.
 
 **What to do:** Fix the file. DSpec Creator can open and save a spec to tidy it.
 
@@ -939,7 +1043,8 @@ The message says which.
 **A value in the spec is not valid.**
 
 A value in the spec isn't one DPM accepts - an invalid package id or version, an unknown compiler or platform,
-a dependency range that isn't valid, or overlapping target platforms. The message says which.
+a dependency range that isn't valid, a dependency listed twice in one template, or overlapping target platforms.
+The message says which.
 
 **What to do:** Correct the value. `docs\dspec-format.md` describes what each element accepts.
 
@@ -1203,10 +1308,15 @@ treats it as the author's own rebuild and installs it.
 
 **The package signer is not a trusted publisher.**
 
-The package is signed, but by a publisher that isn't in your `trustedPublishers`. Permissive mode allows
-installing it.
+The package's signatures verify, but nothing in your configuration trusts the signer: the author certificate
+doesn't chain to a root this machine trusts (a self-signed or private-CA certificate, as private feeds use),
+and its SPKI isn't in your `trustedPublishers`. Permissive mode allows installing it; `require` mode doesn't.
 
-**What to do:** If you trust the publisher, add them with `dpm trust add publisher`.
+A signature that doesn't verify at all is a different matter - it fails the install with DPME7001 in every
+mode.
+
+**What to do:** If you trust the publisher, add them with `dpm trust add publisher` - the package then counts
+as trusted, in `require` mode too.
 
 ### DPMW7009
 
@@ -1224,6 +1334,43 @@ signature may not verify. The message has the details.
 `dpm verify` found no signatures on the package. Permissive mode allows installing it.
 
 **What to do:** Nothing, unless you require signed packages - then sign it, or use a signed version.
+
+### DPMW7011
+
+**A signature's timestamp authority is not trusted.**
+
+The signature and its RFC 3161 timestamp verify, but the timestamp authority's certificate doesn't chain to a
+root this machine trusts - usually because the Windows root certificate store is out of date (an offline or
+air-gapped machine). The timestamp's time can't be relied on, so DPM checked the signing certificate as of
+now instead of as of the signing time. A certificate that is currently valid still verifies; one that has
+since expired doesn't.
+
+**What to do:** Update the machine's root certificates (Windows Update, or import the timestamp authority's
+root). If the signing certificate has expired, the package can't be verified until then.
+
+### DPME7012
+
+**The package is not the package its name says it is.**
+
+Installing a package file, the identity in its signed manifest or its `package.dspec.yaml` (id, version or
+compiler) doesn't match the identity in its file name. A package can't be installed as something it isn't -
+for example, a validly signed old version renamed to stand in for a newer one. DPM removes the file from the
+package cache.
+
+**What to do:** Get the package again from its source. If the source serves the file under the wrong name,
+report it to whoever runs the source.
+
+### DPMW7013
+
+**The trust state could not be read and has been set aside.**
+
+DPM's record of the signatures it has seen (`%APPDATA%\.dpm\trust-state.yaml`) isn't valid YAML, so DPM moved it
+to `trust-state.yaml.corrupt-<date and time>` - the message names the file - and started a new, empty record.
+Each package's signer is trusted on first use again, so a signer change that DPM would have caught for a
+package already installed goes unnoticed until the package is next installed.
+
+**What to do:** Nothing is needed. To keep the history, fix the set-aside file and put it back in place of the
+new one while DPM isn't running.
 
 ### DPME7101
 
@@ -1293,6 +1440,16 @@ The package's manifest, which lists its files and their hashes, is damaged or do
 DPM couldn't read or save its record of the signatures it has seen (`%APPDATA%\.dpm\trust-state.yaml`).
 
 **What to do:** Check the `APPDATA` environment variable is set, and that you can write to the file.
+
+### DPME7109
+
+**The package needs a newer version of DPM.**
+
+The package was made in a newer package format (its manifest's `dpmPackageFormat` or `manifestSchemaVersion`)
+than this version of DPM reads, so DPM can't check it and won't install it.
+
+**What to do:** Update DPM (`dpm upgrade`).
+
 ## SBOM and vulnerability scanning (8xxx)
 
 ### DPME8001
@@ -1504,6 +1661,22 @@ Two or more packages declare the same IDE environment variable with different va
 At startup DPM unloads design packages, and removes Known Packages registry entries, that a previous session left pointing into the package cache. One of them couldn't be removed.
 
 **What to do:** Remove it in Component > Install Packages. It does no harm unless the file is gone.
+
+### DPMW9107
+
+**A package sets an IDE environment variable DPM does not allow.**
+
+The package asks the IDE to set an environment variable DPM reserves (`PATHEXT`, `COMSPEC`, `TEMP` or `BDS`, for example), so DPM didn't set it. `dpm pack` refuses these, so the package wasn't made with `dpm pack`, or was changed after it was. The message names the package and the variable.
+
+**What to do:** Report it to the package author. The rest of the package is loaded as normal.
+
+### DPMW9108
+
+**The DPM IDE options could not be read.**
+
+The IDE plugin's options file (`dpm-ide.config`, next to `dpm.config.yaml`) isn't valid json - it was edited by hand, or cut short - so the plugin uses the default options. The file is left as it is. The message says what is wrong with it.
+
+**What to do:** Fix the file, or open the DPM options in the IDE and save them, which replaces it.
 
 ### DPMW9201
 

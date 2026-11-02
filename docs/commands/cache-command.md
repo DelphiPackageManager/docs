@@ -26,7 +26,8 @@ Downloads a package (and its dependencies) into the local cache without installi
 dpm cache add <packageId> -compiler=<version> [options]
 ```
 
-`-compiler` is required. If `-version` is omitted, the latest version is downloaded.
+`-compiler` is required. If `-version` is omitted, the latest version is downloaded. A package that is already
+built isn't built again unless you pass `-force`.
 
 ## remove
 
@@ -57,7 +58,7 @@ dpm cache verify
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | version        | The package version. For `add`, the version to download (latest if omitted). For `remove`, the version to evict (all cached versions if omitted). |
 | compiler (-c)  | The Delphi compiler version. Required for `add`; an optional filter for `remove` (all compilers if omitted); ignored by `verify`. See [compiler-versions](../compiler-versions.md). |
-| force (-f)     | For `remove`, skip the confirmation prompt.                                                                                            |
+| force (-f)     | For `remove`, skip the confirmation prompt. For `add`, build the package even if it is already built - from a package file too. |
 | sources (-s)   | Source(s) to fetch from (`add`). May be specified multiple times. If omitted, all configured sources are used.                          |
 | configFile     | The DPM configuration file to apply. If not specified, `%AppData%\.dpm\dpm.config.yaml` is used.                                            |
 | verbosity (-v) | Output verbosity: _quiet_, _normal_, _detailed_.                                                                                       |
