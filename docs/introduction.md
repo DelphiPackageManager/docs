@@ -12,18 +12,7 @@ DPM's initial developer is Vincent Parrett (DUnitX, FinalBuilder, Continua CI). 
 
 ### DPM Status
 
-DPM is in beta - we have put a lot of work in to getting it to a point where it should be usable for most Delphi developers. 
-
-#### What works
-
-- Creating packages (library authors)
-- Pushing packages to a package source (directory or server)
-- Installing and Restoring packages, including dependencies and design time components.
-- Multiple package sources
-- Package Signing - both Author (using a code signing certificate) and Repository signing (automatic).
-- Repository and Author Trust.
-- SBOM generation.
-- CLI and IDE plugin clients.
+DPM is at Release Candidate stage - we are close to releasing v1 and no major changes are planned before then (in the next week or two). DPM is stable.
 
 
 ### Can I use it with non DPM third party libraries?
