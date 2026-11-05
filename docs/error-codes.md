@@ -1612,6 +1612,14 @@ The linker MAP file was found but couldn't be read, so the SBOM lists the DPM pa
 
 **What to do:** Build the project again to regenerate the MAP file.
 
+### DPME8117
+
+**The SBOM product information file could not be written.**
+
+The IDE's Generate SBOM dialog couldn't save the product information to the project's `.sbom.yaml` file. The message names the file and says why. The SBOM is still generated with the values entered in the dialog.
+
+**What to do:** Check the file isn't read-only or open in another program, then generate the SBOM again.
+
 ## The IDE plugin, DSpec Creator and the MCP server (9xxx)
 
 ### DPMW9101

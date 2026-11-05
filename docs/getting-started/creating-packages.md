@@ -214,7 +214,7 @@ dependencies:
   - id: Spring4D.Core
     version: "[2.0.0,)"
   - id: VSoft.SemanticVersion
-    version: "[1.0.0,2.0.0]"
+    version: "[1.0.0,1.0.9]"
   - id: MyCompany.Shared
     version: $version$
   - id: Indy.System
