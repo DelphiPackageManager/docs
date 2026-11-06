@@ -500,7 +500,7 @@ install or restore carries on - it doesn't change that package - but the group i
 cache holds one build of each package version, so a package that depends on it is rebuilt each time a project
 using the other version is restored.
 
-**What to do:** Bring the projects onto the same version of the package.
+**What to do:** Upgrade the package in the project the warning names (`dpm install <id>@<version> --upgrade`, or Upgrade in the IDE). An upgrade also changes a package that is only a dependency of the project.
 
 ### DPMW2011
 
@@ -545,7 +545,7 @@ platforms that were asked for.
 
 **The package is not installed in any of the projects.**
 
-An upgrade was asked for a package that isn't installed in any of the projects.
+An upgrade was asked for a package that isn't in any of the projects, as a top level reference or as a dependency.
 
 **What to do:** Install the package instead of upgrading it.
 

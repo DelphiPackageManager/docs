@@ -23,7 +23,7 @@ dpm install <packageId> [projectPath] [options]
 | sources (-s)   | Source(s) from which to install. May be specified multiple times. If omitted, sources from the configuration file are used.                            |
 | preRelease (-pr) | Allow installation of pre-release packages.                                                                                                          |
 | force          | Force install of the package even if it is already installed.                                                                                          |
-| upgrade        | Indicates the install is replacing an existing version of the package.                                                                                 |
+| upgrade        | Change the installed version of the package. Where a project has it only as a dependency of another package, it is changed in place - not made a top level reference - when every package that depends on it accepts the version; otherwise that project is left unchanged and the plan says why. |
 | useSource (-us) | Reference the package source rather than the compiled binaries.                                                                                       |
 | debugMode (-dm) | Install the Debug configuration of the package.                                                                                                       |
 | configFile     | The DPM configuration file to apply. If not specified, `%AppData%\.dpm\dpm.config.yaml` is used.                                                            |
