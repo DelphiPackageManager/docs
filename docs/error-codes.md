@@ -174,6 +174,14 @@ The command needs a configuration file, and the one it was given (or the default
 
 **What to do:** Check the `--configFile` path, or add a source with `dpm sources add`, which creates the file.
 
+### DPMW0204
+
+**A configuration value is not valid.**
+
+A setting in the DPM configuration file has a value DPM doesn't recognise - for example `compilerOutput.logLevel: loud`. The message names the setting and the values it accepts. DPM uses the setting's default and carries on.
+
+**What to do:** Fix the value in the configuration file (by default `%APPDATA%\.dpm\dpm.config.yaml`).
+
 ### DPME0301
 
 **Unable to check for a newer version of DPM.**

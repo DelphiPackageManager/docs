@@ -21,6 +21,9 @@ signing:
   trustedRepositories:
     - url: https://delphi.dev
       spki: 7a3f9b2c5d6e8f1a4b7c9d2e5f8a1b4c7d9e2f5a8b1c4d7e9f2a5b8c1d4e7f9a
+compilerOutput:
+  logLevel: verbose
+  msbuildVerbosity: normal
 packageSources:
   - name: dpminternal
     source: "i:\\dpm-internal"
@@ -39,6 +42,7 @@ packageSources:
 | packageCacheLocation | The location of the default global packages folder. The default is `%APPDATA%\.dpm\package_cache` |
 | author        | The default author used by the spec scaffolder - optional |   
 | signing | Package signing configuration |
+| compilerOutput | How package compiles show their output - optional |
 | packagesSources      | An array of packageSource objects                                                            |
 
 **signing**
@@ -52,6 +56,17 @@ See [Package Signing](./package-signing.md) for an overview of how signing and v
 | allowKeyCompromiseOverride   | Whether the user may override a known-compromised key warning. Defaults to `false`.                                  |
 | trustedPublishers            | List of trusted publishers, each with a `name` and the SPKI fingerprint (`spki`) of their signing certificate.       |
 | trustedRepositories          | List of trusted repositories, each with a `url` and the SPKI fingerprint (`spki`) of the repository signing key.     |
+
+**compilerOutput**
+
+How DPM shows msbuild's output while it compiles a package. It is only written to the file when it is not the default.
+
+| Property         | Value |
+| ---------------- | ----- |
+| logLevel         | The level each line msbuild writes is logged at, as it arrives: `verbose` (default) or `information`. `verbose` lines are shown at `--verbosity=Detailed` and `Debug`, `information` lines at `Normal` and above. When a compile fails and its lines weren't shown, they are shown before the error. |
+| msbuildVerbosity | How much msbuild writes (its `/v:` switch): `quiet`, `minimal`, `normal` (default), `detailed` or `diagnostic`. |
+
+A value DPM doesn't recognise is reported as warning [DPMW0204](../error-codes.md#dpmw0204) and the default is used.
 
 
 
