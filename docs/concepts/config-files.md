@@ -63,7 +63,7 @@ How DPM shows msbuild's output while it compiles a package. It is only written t
 
 | Property         | Value |
 | ---------------- | ----- |
-| logLevel         | The level each line msbuild writes is logged at, as it arrives: `verbose` (default) or `information`. `verbose` lines are shown at `--verbosity=Detailed` and `Debug`, `information` lines at `Normal` and above. When a compile fails and its lines weren't shown, they are shown before the error. |
+| logLevel         | The level each line msbuild writes is logged at, as it arrives: `verbose` (default) or `information`. `verbose` lines are shown at `--verbosity=Detailed` and `Debug`, `information` lines at `Normal` and above (or the matching DPM log level in the IDE). When a compile fails and its lines weren't shown, they are shown before the error. |
 | msbuildVerbosity | How much msbuild writes (its `/v:` switch): `quiet`, `minimal`, `normal` (default), `detailed` or `diagnostic`. |
 
 A value DPM doesn't recognise is reported as warning [DPMW0204](../error-codes.md#dpmw0204) and the default is used.

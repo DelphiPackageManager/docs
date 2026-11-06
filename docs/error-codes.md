@@ -860,7 +860,7 @@ DPM couldn't start msbuild to compile a package.
 
 **A package failed to compile.**
 
-msbuild couldn't compile one of the package's projects. The compiler output is shown just before the error.
+msbuild couldn't compile one of the package's projects. The compiler output is shown before the error, as it arrives when it is shown live (see `compilerOutput` in the configuration file docs).
 
 **What to do:** Look at the compiler output for the cause. A package that doesn't compile for a compiler or
 platform is usually something to report to the package author.
