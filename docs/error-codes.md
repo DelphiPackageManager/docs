@@ -496,7 +496,9 @@ Working out which other packages have to move with the install kept finding more
 **Projects in the group use different versions of a package.**
 
 Another project in the group uses a different version of a package that this project references. The
-install carries on - it doesn't change that package - but the group is inconsistent.
+install or restore carries on - it doesn't change that package - but the group is inconsistent. The package
+cache holds one build of each package version, so a package that depends on it is rebuilt each time a project
+using the other version is restored.
 
 **What to do:** Bring the projects onto the same version of the package.
 
