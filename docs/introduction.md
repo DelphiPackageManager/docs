@@ -12,7 +12,7 @@ DPM's initial developer is Vincent Parrett (DUnitX, FinalBuilder, Continua CI). 
 
 ### DPM Status
 
-DPM is at Release Candidate stage - we are close to releasing v1 and no major changes are planned before then (in the next week or two). DPM is stable.
+DPM is at V1, stable and ready for general usage.
 
 
 ### Can I use it with non DPM third party libraries?
